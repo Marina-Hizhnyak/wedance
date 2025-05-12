@@ -1,5 +1,6 @@
 <template>
     <div>
+    <ChatModal />
     <CTASection />
     <HeroSection />
     <TeamSection :team-members="teams" />
@@ -17,6 +18,7 @@ import TeamSection from '@/Components/Home/TeamSection.vue';
 import CoursesSection from '@/Components/Home/CoursesSection.vue';
 import EventsSection from '@/Components/Home/EventsSection.vue';
 import TestimonialsSection from '@/Components/Home/TestimonialsSection.vue';
+import ChatModal from '@/Components/ChatModal.vue';
 
 
 defineOptions({

@@ -1,4 +1,4 @@
-<!-- resources/js/Pages/Admin/tabs/CoursesTab.vue -->
+
 <template>
   <div>
     <h1 class="text-3xl font-bold text-primary mb-4">Cours</h1>

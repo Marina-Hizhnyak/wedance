@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\BlogPost;
+use App\Models\ChatSession;
 use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\CourseLevel;
@@ -21,7 +22,7 @@ class AdminDashboardController extends Controller
     public function index()
     {
         $courses = Course::with(['instructor', 'category', 'level'])->get();
-
+        $chats = ChatSession::with(['user', 'messages'])->get();
         return Inertia::render('Dashboard/Admin', [
             'user' => Auth::user(),
             'users' => User::select('id', 'name', 'role', 'email', 'created_at')->get(),
@@ -34,6 +35,7 @@ class AdminDashboardController extends Controller
             'media' => GalleryMedia::latest()->get(),
             'posts' => BlogPost::with('author')->latest()->get(),
             'messages' => Message::with('course')->latest()->get(),
+            'chats' => $chats,
         ]);
     }
 

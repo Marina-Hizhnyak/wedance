@@ -7,12 +7,15 @@ use App\Http\Controllers\Admin\AdminCourseController;
 use App\Http\Controllers\BlogCommentController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CourseRegistrationController;
 use App\Http\Controllers\Dashboard\AdminDashboardController;
 use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\Dashboard\TeacherDashboardController;
 use App\Http\Controllers\Dashboard\UserDashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryMediaController;
+use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\LikeController;
@@ -36,8 +39,6 @@ Route::middleware([
     })->name('dashboard');
 });
 Route::get('/', [HomeController::class, 'index'])->name('home');
-// Route::get('/cours/{category}', [CourseController::class, 'byCategory']);
-// Route::get('/cours/{category}/{level}', [CourseController::class, 'byCategoryAndLevel']);
 Route::get('/cours/{categorySlug}', [CourseController::class, 'byCategory'])->name('courses.byCategory');
 Route::get('/cours/{categorySlug}/{levelSlug}', [CourseController::class, 'byCategoryAndLevel'])->name('courses.byCategoryAndLevel');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
@@ -50,6 +51,13 @@ Route::get('/blog/{slug}', [BlogPostController::class, 'show'])->name('blog.show
 Route::post('/contact/message', [MessageController::class, 'store'])->name('contact.message');
 Route::post('/inscription/message', [MessageController::class, 'store'])->name('inscription.message');
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
+Route::post('/chat/create-session', [ChatController::class, 'createSession'])->name('chat.createSession');
+Route::post('/chat/send-message', [ChatController::class, 'sendMessage'])->name('chat.sendMessage');
+
+// 🔑 Google OAuth login
+Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('google.redirect');
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/courses/{course}/register', [CourseRegistrationController::class, 'store'])
@@ -76,26 +84,6 @@ Route::middleware(['auth'])->get('/redirect', function () {
     return redirect()->route('dashboard.user');
 });
 
-// 🛡 Панель администратора
-// Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function () {
-//     // Admin panel main page
-//     Route::get('/dashboard/admin', [AdminDashboardController::class, 'index'])->name('dashboard.admin');
-
-//     // Users CRUD
-//     Route::controller(AdminDashboardController::class)->prefix('/admin/users')->group(function () {
-//         Route::post('/', 'store')->name('admin.users.store');
-//         Route::put('/{user}', 'update')->name('admin.users.update');
-//         Route::delete('/{user}', 'destroy')->name('admin.users.destroy');
-//     });
-
-//     // Courses CRUD
-//     Route::resource('/admin/courses', AdminCourseController::class)->only(['store', 'update', 'destroy']);
-//     Route::resource('/admin/events', EventController::class)->except(['show', 'create', 'edit'])->names('admin.events');
-
-//     Route::get('/gallery', [GalleryMediaController::class, 'index'])->name('admin.gallery');
-//     Route::post('/gallery', [GalleryMediaController::class, 'store'])->name('admin.gallery.store');
-//     Route::delete('/gallery/{media}', [GalleryMediaController::class, 'destroy'])->name('admin.gallery.destroy');
-// });
 
 // 🛡 Панель администратора
 Route::middleware(['auth', RoleMiddleware::class . ':admin'])
@@ -131,17 +119,51 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])
         Route::post('/blog', [BlogPostController::class, 'store'])->name('admin.blog.store');
         Route::put('/blog/{post}', [BlogPostController::class, 'update'])->name('admin.blog.update');
         Route::delete('/blog/{post}', [BlogPostController::class, 'destroy'])->name('admin.blog.destroy');
+
+        Route::delete('/chats/{chatSession}', [ChatController::class, 'destroy'])->name('admin.chats.destroy');
     });
 
 
 // 🧑‍🏫 Панель преподавателя
-Route::middleware(['auth', RoleMiddleware::class . ':teacher'])
-    ->get('/dashboard/teacher', fn() => Inertia::render('Dashboard/Teacher'))
-    ->name('dashboard.teacher');
+// Route::middleware(['auth', RoleMiddleware::class . ':teacher'])
+//     ->get('/dashboard/teacher', [TeacherDashboardController::class, 'index'])
+//     ->name('dashboard.teacher');
 
+// Route::middleware(['auth', RoleMiddleware::class . ':teacher'])
+//     ->prefix('teacher')
+//     ->group(function () {
+//         Route::post('/courses', [TeacherDashboardController::class, 'store'])->name('teacher.courses.store');
+//         Route::put('/courses/{course}', [TeacherDashboardController::class, 'update'])->name('teacher.courses.update');
+//         Route::delete('/courses/{course}', [TeacherDashboardController::class, 'destroy'])->name('teacher.courses.destroy');
+//     });
+Route::middleware(['auth', RoleMiddleware::class . ':teacher'])
+    ->prefix('teacher')
+    ->group(function () {
+
+        Route::get('/dashboard', [TeacherDashboardController::class, 'index'])
+            ->name('dashboard.teacher');
+
+        Route::post('/courses', [TeacherDashboardController::class, 'storeCourse'])
+            ->name('teacher.courses.store');
+        Route::put('/courses/{course}', [TeacherDashboardController::class, 'updateCourse'])
+            ->name('teacher.courses.update');
+        Route::delete('/courses/{course}', [TeacherDashboardController::class, 'destroyCourse'])
+            ->name('teacher.courses.destroy');
+
+        Route::post('/events', [TeacherDashboardController::class, 'storeEvent'])->name('teacher.events.store');
+        Route::put('/events/{event}', [TeacherDashboardController::class, 'updateEvent'])->name('teacher.events.update');
+        Route::delete('/events/{event}', [TeacherDashboardController::class, 'destroyEvent'])->name('teacher.events.destroy');
+    });
 // 👤 Панель пользователя
 Route::middleware(['auth', RoleMiddleware::class . ':user,teacher'])
     ->group(function () {
         Route::get('/dashboard/user', [UserDashboardController::class, 'index'])->name('dashboard.user');
         Route::put('/dashboard/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/dashboard/user/chats/{chatSession}', [UserDashboardController::class, 'destroy'])
+            ->name('user.chats.destroy');
     });
+
+
+
+Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('google.redirect');
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');

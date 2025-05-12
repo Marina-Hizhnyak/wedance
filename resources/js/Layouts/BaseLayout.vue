@@ -2,6 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import Header from "@/Components/Header.vue";
 import Footer from "@/Components/Footer.vue";
+
 </script>
 
 <template>
@@ -9,7 +10,6 @@ import Footer from "@/Components/Footer.vue";
         <div class="absolute min-w-[500px] min-h-[500px] top-0 left-0 bg-no-repeat bg-cover z-[-1]"
             style="background-image: url('/images/backgrounds/Ellipse.png');"></div>
         <Header />
-
         <!-- Контент страницы -->
         <main class="flex-grow pt-16">
             <slot />

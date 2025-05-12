@@ -8,7 +8,7 @@ import EventsTab from './tabs/EventsTab.vue'
 import GalleryTab from './tabs/GalleryTab.vue'
 import BlogTab from './tabs/BlogTab.vue'
 import MessagesTab from './tabs/MessagesTab.vue'
-
+import ChatsTab from './tabs/ChatsTab.vue'
 
 import { usePage } from '@inertiajs/vue3'
 
@@ -28,6 +28,7 @@ const props = defineProps({
    media: Array,
     posts: Array,
    messages: Array,
+   chats: Array,
 })
 const currentTabComponent = computed(() => {
   return {
@@ -37,7 +38,8 @@ const currentTabComponent = computed(() => {
     events: EventsTab,
     gallery: GalleryTab,
     blog: BlogTab,
-    messages: MessagesTab
+    messages: MessagesTab,
+    chats: ChatsTab,
   }[currentTab.value]
 })
 
@@ -67,6 +69,7 @@ function tabBtn(tab) {
         <button @click="currentTab = 'gallery'" :class="tabBtn('gallery')">🖼️ Galerie</button>
         <button @click="currentTab = 'blog'" :class="tabBtn('blog')">📝 Blog</button>
         <button @click="currentTab = 'messages'" :class="tabBtn('messages')">📨 Messages</button>
+        <button @click="currentTab = 'chats'" :class="tabBtn('chats')">💬 Chats</button>
 
       </nav>
     </aside>
@@ -83,7 +86,8 @@ function tabBtn(tab) {
         :organizers="organizers"
         :media="media"
         :posts="posts"
-        :messages="messages"/>
+        :messages="messages"
+        :chats="chats"/>
     </main>
   </div>
 </template>

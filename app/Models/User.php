@@ -94,4 +94,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Like::class);
     }
+
+    public function chatSessions()
+    {
+        return $this->hasMany(ChatSession::class);
+    }
+
+    public function teacherCourses()
+    {
+        return $this->hasMany(Course::class, 'instructor_id');
+    }
+
+    public function teacherEvents()
+    {
+        return $this->hasMany(Event::class, 'organizer_id');
+    }
 }
