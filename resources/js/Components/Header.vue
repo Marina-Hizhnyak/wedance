@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { Link, usePage } from '@inertiajs/vue3'
+import Breadcrumbs from '@/Components/Breadcrumbs.vue'
 
 const user = usePage().props.auth.user
 const csrfToken = usePage().props.csrf_token
@@ -31,8 +32,8 @@ const isActive = (path) => usePage().url === path
 <template>
   <header class="fixed w-full z-50 shadow-lg bg-background">
     <div class="w-[90%] mx-auto flex justify-between items-center px-8 py-3">
-      <Link href="/" class="flex items-center bg-gradient-to-r from-[#FFE17D] to-[#DD6031]">
-        <img src="/images/logos/logogr.svg" alt="Logo" class="h-[60px] w-auto" />
+      <Link href="/" class="flex items-center">
+        <img src="/images/logos/Union-primary.svg" alt="Logo" class="h-[60px] w-auto" />
       </Link>
 
       <nav class="hidden md:flex px-10 text-primary text-base font-title font-semibold">
@@ -95,7 +96,7 @@ const isActive = (path) => usePage().url === path
       <!-- 🔐 Гость -->
       <template v-if="!user">
         <Link href="/register" class="px-5 py-2 bg-primary text-black font-bold font-title rounded-full shadow-md hover:bg-primary transition flex items-center justify-center">S'INSCRIRE</Link>
-        <Link href="/login" class="px-4 py-2 border border-primary text-white rounded-full font-bold">SIGN IN</Link>
+        <Link href="/login" class="px-4 py-2 border border-primary text-white rounded-full font-bold">SE CONNECTER</Link>
       </template>
 
       <!-- 👤 Авторизованный -->
@@ -114,7 +115,7 @@ const isActive = (path) => usePage().url === path
         href="/logout"
         class="px-5 py-2 bg-primary text-black font-bold font-title rounded-full shadow-md hover:bg-secondary transition flex items-center justify-center"
         >
-        Logout
+        Se déconnecter
         </Link>
 
       </template>
@@ -146,6 +147,9 @@ const isActive = (path) => usePage().url === path
       >
         SIGN IN
       </Link>
+    </div>
+        <div class="w-[90%] mx-auto">
+      <Breadcrumbs />
     </div>
   </header>
 </template>

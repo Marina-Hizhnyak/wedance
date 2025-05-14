@@ -6,7 +6,7 @@ import { Link } from '@inertiajs/vue3';
 <template>
     <Link :href="'/'">
         <img
-            src="/images/logos/logo-or.svg"
+            src="/images/logos/Union-noir.svg"
             alt="WeDance Logo"
             class="w-16 h-auto"
         />

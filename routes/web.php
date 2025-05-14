@@ -50,7 +50,7 @@ Route::get('/blog', [BlogPostController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogPostController::class, 'show'])->name('blog.show');
 Route::post('/contact/message', [MessageController::class, 'store'])->name('contact.message');
 Route::post('/inscription/message', [MessageController::class, 'store'])->name('inscription.message');
-Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
+Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
 Route::post('/chat/create-session', [ChatController::class, 'createSession'])->name('chat.createSession');
 Route::post('/chat/send-message', [ChatController::class, 'sendMessage'])->name('chat.sendMessage');
 

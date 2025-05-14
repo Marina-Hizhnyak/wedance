@@ -12,32 +12,16 @@ class CalendarController extends Controller
 {
     public function index()
     {
-        $year = now()->year;
-        $month = now()->month;
+        $start = now()->startOfMonth();
+        $end = now()->addMonths(3)->endOfMonth();
 
-        // $courseEvents = Course::with('category', 'level')->get()->flatMap(function ($course) use ($year, $month) {
-        //     $dates = $this->getAllDatesForWeekday($course->day_of_week, $year, $month);
-
-        //     return collect($dates)->map(function ($date) use ($course) {
-        //         return [
-        //             'title' => 'Cours: ' . $course->title,
-        //             'start' => $date,
-        //             'url' => route('courses.byCategoryAndLevel', [
-        //                 'categorySlug' => $course->category->slug,
-        //                 'levelSlug' => $course->level->slug,
-        //             ]),
-        //         ];
-        //     });
-        // });
-        $courseEvents = Course::with(['category', 'level'])->get()->flatMap(function ($course) use ($year, $month) {
-            $dayParts = explode(' ', $course->day_time); // разбиваем "Vendredi 18:00"
+        $courseEvents = Course::with(['category', 'level'])->get()->flatMap(function ($course) use ($start, $end) {
+            $dayParts = explode(' ', $course->day_time);
             $weekday = $dayParts[0] ?? null;
 
-            if (!$weekday) {
-                return []; // если нет дня — пропускаем
-            }
+            if (!$weekday) return [];
 
-            $dates = $this->getAllDatesForWeekday($weekday, $year, $month);
+            $dates = $this->getAllDatesForWeekdayInRange($weekday, $start, $end);
 
             return collect($dates)->map(function ($date) use ($course) {
                 return [
@@ -47,12 +31,14 @@ class CalendarController extends Controller
                         'categorySlug' => $course->category->slug,
                         'levelSlug' => $course->level->slug,
                     ]),
+                    'backgroundColor' => $this->getColorForCourse($course),
+                    'borderColor' => $this->getColorForCourse($course),
+                    'textColor' => '#FFFFFF',
                 ];
             });
         });
 
-
-        $eventEvents = Event::all()->map(function ($event) {
+        $eventEvents = Event::whereBetween('date', [$start, $end])->get()->map(function ($event) {
             return [
                 'title' => 'Événement: ' . $event->title,
                 'start' => Carbon::parse($event->date)->toDateString(),
@@ -65,7 +51,8 @@ class CalendarController extends Controller
         ]);
     }
 
-    private function getAllDatesForWeekday(string $weekdayName, int $year, int $month): array
+
+    private function getAllDatesForWeekdayInRange(string $weekdayName, Carbon $start, Carbon $end): array
     {
         $daysMap = [
             'Lundi' => Carbon::MONDAY,
@@ -77,20 +64,16 @@ class CalendarController extends Controller
             'Dimanche' => Carbon::SUNDAY,
         ];
 
-        if (!isset($daysMap[$weekdayName])) {
-            return [];
-        }
+        if (!isset($daysMap[$weekdayName])) return [];
 
-        $firstDay = Carbon::create($year, $month, 1);
-        $lastDay = $firstDay->copy()->endOfMonth();
         $dates = [];
+        $current = $start->copy()->next($daysMap[$weekdayName]);
 
-        $current = $firstDay->copy()->next($daysMap[$weekdayName]);
-        if ($firstDay->dayOfWeek === $daysMap[$weekdayName]) {
-            $current = $firstDay->copy();
+        if ($start->dayOfWeek === $daysMap[$weekdayName]) {
+            $current = $start->copy();
         }
 
-        while ($current->lte($lastDay)) {
+        while ($current->lte($end)) {
             $dates[] = $current->toDateString();
             $current->addWeek();
         }
@@ -98,56 +81,17 @@ class CalendarController extends Controller
         return $dates;
     }
 
-    // private function getAllDatesForWeekday($weekday, $year, $month)
-    // {
-    //     $dates = [];
+    private function getColorForCourse($course)
+    {
+        if (!$course->category) return '#1ABC9C';
 
-    //     try {
-    //         $dayNumber = Carbon::parse($weekday)->dayOfWeek;
-    //     } catch (\Exception $e) {
-    //         return [];
-    //     }
-
-    //     $date = Carbon::createFromDate($year, $month, 1)->startOfMonth();
-    //     $end = $date->copy()->endOfMonth();
-
-    //     while ($date->lte($end)) {
-    //         if ($date->dayOfWeek === $dayNumber) {
-    //             $dates[] = $date->toDateString();
-    //         }
-    //         $date->addDay();
-    //     }
-
-    //     return $dates;
-    // }
-
-
-    // private function getAllDatesForWeekday($weekday, $year, $month)
-    // {
-    //     $dayOfWeekMap = [
-    //         'Lundi' => 1,
-    //         'Mardi' => 2,
-    //         'Mercredi' => 3,
-    //         'Jeudi' => 4,
-    //         'Vendredi' => 5,
-    //         'Samedi' => 6,
-    //         'Dimanche' => 0,
-    //     ];
-
-    //     if (!isset($dayOfWeekMap[$weekday])) return [];
-
-    //     $targetWeekday = $dayOfWeekMap[$weekday];
-
-    //     $date = Carbon::createFromDate($year, $month, 1);
-    //     $dates = [];
-
-    //     while ($date->month === $month) {
-    //         if ($date->dayOfWeek === $targetWeekday) {
-    //             $dates[] = $date->toDateString();
-    //         }
-    //         $date->addDay();
-    //     }
-
-    //     return $dates;
-    // }
+        return match ($course->category->name) {
+            'Salsa' => '#E63946',
+            'Bachata' => '#FFB400',
+            'Kizomba' => '#FFB400',
+            'Lady Styling' => '#8E44AD',
+            'Zouk' => '#2ECC71',
+            default => '#1ABC9C',
+        };
+    }
 }
