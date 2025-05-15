@@ -18,6 +18,7 @@ return new class extends Migration
             $table->dateTime('date');
             $table->string('location');
             $table->unsignedBigInteger('organizer_id')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
             $table->foreign('organizer_id')->references('id')->on('users')->onDelete('set null');
         });

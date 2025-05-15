@@ -20,6 +20,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\SearchController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Models\Course;
 use App\Models\User;
@@ -39,11 +40,12 @@ Route::middleware([
     })->name('dashboard');
 });
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/cours/{categorySlug}', [CourseController::class, 'byCategory'])->name('courses.byCategory');
-Route::get('/cours/{categorySlug}/{levelSlug}', [CourseController::class, 'byCategoryAndLevel'])->name('courses.byCategoryAndLevel');
+Route::get('/courses/{categorySlug}', [CourseController::class, 'byCategory'])->name('courses.byCategory');
+Route::get('/courses/{categorySlug}/{levelSlug}', [CourseController::class, 'byCategoryAndLevel'])->name('courses.byCategoryAndLevel');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/evenements', [EventController::class, 'index'])->name('events');
+Route::get('/evenements/{event}', [EventController::class, 'show'])->name('events.show');
 Route::get('/inscription', [InscriptionController::class, 'index'])->name('inscription');
 Route::get('/gallery', [GalleryMediaController::class, 'index'])->name('gallery');
 Route::get('/blog', [BlogPostController::class, 'index'])->name('blog.index');
@@ -53,7 +55,11 @@ Route::post('/inscription/message', [MessageController::class, 'store'])->name('
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
 Route::post('/chat/create-session', [ChatController::class, 'createSession'])->name('chat.createSession');
 Route::post('/chat/send-message', [ChatController::class, 'sendMessage'])->name('chat.sendMessage');
-
+Route::get('/search', [SearchController::class, 'index'])->name('search');
+Route::get('/legal-notice', fn() => Inertia::render('LegalNotice'));
+Route::get('/privacy-policy', fn() => Inertia::render('PrivacyPolicy'));
+Route::get('/terms-of-use', fn() => Inertia::render('TermsOfUse'));
+Route::get('/cookie-policy', fn() => Inertia::render('CookiePolicy'));
 // 🔑 Google OAuth login
 Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('google.redirect');
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');
@@ -162,8 +168,3 @@ Route::middleware(['auth', RoleMiddleware::class . ':user,teacher'])
         Route::delete('/dashboard/user/chats/{chatSession}', [UserDashboardController::class, 'destroy'])
             ->name('user.chats.destroy');
     });
-
-
-
-Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('google.redirect');
-Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');

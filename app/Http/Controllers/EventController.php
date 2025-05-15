@@ -17,6 +17,13 @@ class EventController extends Controller
         ]);
     }
 
+    public function show(Event $event)
+    {
+        return Inertia::render('EventShow', [
+            'event' => $event
+        ]);
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([

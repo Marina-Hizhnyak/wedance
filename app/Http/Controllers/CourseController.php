@@ -39,19 +39,16 @@ class CourseController extends Controller
         $category = CourseCategory::where('slug', $categorySlug)->firstOrFail();
         $level = CourseLevel::where('slug', $levelSlug)->firstOrFail();
 
-        $courses = Course::with(['level', 'category', 'users'])
+        $course = Course::with(['level', 'category', 'users'])
             ->where('course_category_id', $category->id)
             ->where('course_level_id', $level->id)
-            ->get();
+            ->firstOrFail();
 
-        foreach ($courses as $course) {
-            $course->is_registered = $user && $course->users->contains($user->id);
-        }
+        $is_registered = $user && $course->users->contains($user->id);
 
-        return Inertia::render('Courses/Index', [
-            'courses' => $courses,
-            'category' => $category->name,
-            'level' => $level->name,
+        return Inertia::render('Courses/Show', [
+            'course' => $course,
+            'is_registered' => $is_registered,
         ]);
     }
 }

@@ -25,7 +25,7 @@ const hasCourses = computed(() => props.courses.length > 0)
       >
         <!-- Course image -->
         <img
-          :src="`/storage/${course.image}`"
+          :src="`/images/courses/${course.image}`"
           alt="Course image"
           class="w-full h-48 object-cover"
         />

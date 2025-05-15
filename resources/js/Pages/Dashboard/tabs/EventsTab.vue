@@ -85,7 +85,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { router } from '@inertiajs/vue3'
+import { useForm, router } from '@inertiajs/vue3'
 
 const props = defineProps({
   events: Array,
@@ -95,7 +95,7 @@ const props = defineProps({
 const isCreating = ref(false)
 const isEditing = ref(false)
 
-const form = ref({
+const form = useForm({
   id: null,
   title: '',
   description: '',
@@ -104,59 +104,64 @@ const form = ref({
   organizer_id: null,
 })
 
+// reset form
 const resetForm = () => {
-  form.value = {
-    id: null,
-    title: '',
-    description: '',
-    date: '',
-    location: '',
-    organizer_id: null,
-  }
+  form.reset()
+  form.clearErrors()
+  form.id = null
 }
 
+// open create form
 const openCreateForm = () => {
   resetForm()
   isCreating.value = true
   isEditing.value = false
 }
 
+// edit existing event
 const editEvent = (event) => {
-  form.value = { ...event }
+  form.id = event.id
+  form.title = event.title
+  form.description = event.description
+  form.date = event.date
+  form.location = event.location
+  form.organizer_id = event.organizer_id
   isCreating.value = false
   isEditing.value = true
 }
 
+// cancel create/edit
 const cancelForm = () => {
   resetForm()
   isCreating.value = false
   isEditing.value = false
 }
 
+// save create or update
 const saveEvent = () => {
-  const data = { ...form.value }
-
   if (isEditing.value) {
-    router.put(`/admin/events/${form.value.id}`, data, {
+    form.put(route('admin.events.update', form.id), {
       preserveScroll: true,
-      onSuccess: cancelForm,
+      onSuccess: cancelForm
     })
   } else {
-    router.post('/admin/events', data, {
+    form.post(route('admin.events.store'), {
       preserveScroll: true,
-      onSuccess: cancelForm,
+      onSuccess: cancelForm
     })
   }
 }
 
+// delete event
 const deleteEvent = (id) => {
   if (confirm("Voulez-vous vraiment supprimer cet événement ?")) {
-    router.delete(`/admin/events/${id}`, {
+    router.delete(route('admin.events.destroy', id), {
       preserveScroll: true,
     })
   }
 }
 
+// format date
 const formatDate = (dateStr) => {
   const date = new Date(dateStr)
   return date.toLocaleString('fr-FR', {
@@ -169,4 +174,5 @@ const formatDate = (dateStr) => {
   })
 }
 </script>
+
 

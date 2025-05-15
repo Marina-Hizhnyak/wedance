@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
             CourseLevelSeeder::class,
             CourseSeeder::class,
             EventSeeder::class,
+            BlogPostSeeder::class,
+            GalleryMediaSeeder::class,
         ]);
     }
 }

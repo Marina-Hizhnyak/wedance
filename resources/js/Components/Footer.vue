@@ -41,8 +41,8 @@
       <div class="w-full md:w-1/3 px-4 space-y-6 text-center md:text-left">
         <!-- Navigation links -->
         <ul class="space-y-6 px-10 text-base text-text text-body">
-          <li><a href="/a-propos" class="hover:text-[#F9B233] transition">À propos</a></li>
-          <li><a href="/cours" class="hover:text-[#F9B233] transition">Cours</a></li>
+          <li><a href="/about" class="hover:text-[#F9B233] transition">À propos</a></li>
+          <li><a href="/calendar" class="hover:text-[#F9B233] transition">Calendrier</a></li>
           <li><a href="/evenements" class="hover:text-[#F9B233] transition">Événements</a></li>
           <li><a href="/contact" class="hover:text-[#F9B233] transition">Contact</a></li>
         </ul>
@@ -75,14 +75,24 @@
     <img src="/images/backgrounds/couple.png" alt="Dance icon" class="absolute -top-10 left-80 w-auto h-[300px]" />
 
     <!-- Footer info -->
-    <div class="text-sm text-gray-400 mt-8">
-        © 2025 Transparent.inc. ·
-        <a href="/privacy" class="hover:text-white">Privacy</a> ·
-        <a href="/terms" class="hover:text-white">Terms</a>
-    </div>
+        <div class="text-sm text-gray-400 mt-8 relative z-10">
+          <p>© {{ new Date().getFullYear() }} Wedance. Tous droits réservés.</p>
+            <div class="flex flex-wrap gap-2 mt-2">
+                <Link href="/legal-notice" class="hover:text-white">Mentions légales</Link>
+                <span>·</span>
+                <Link href="/privacy-policy" class="hover:text-white">Politique de confidentialité</Link>
+                <span>·</span>
+                <Link href="/terms-of-use" class="hover:text-white">CGU</Link>
+                <span>·</span>
+                <Link href="/cookie-policy" class="hover:text-white">Cookies</Link>
+            </div>
+        </div>
     </div>
 
    </div>
   </footer>
 </template>
+<script setup>
+import { Link } from '@inertiajs/vue3'
+</script>
 

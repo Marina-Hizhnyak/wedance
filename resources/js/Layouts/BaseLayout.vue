@@ -12,7 +12,7 @@ import Footer from "@/Components/Footer.vue";
             style="background-image: url('/images/backgrounds/Ellipse.png');"></div>
         <Header />
         <!-- Контент страницы -->
-        <main class="flex-grow pt-16">
+        <main class="flex-grow pt-32">
             <slot />
         </main>
 

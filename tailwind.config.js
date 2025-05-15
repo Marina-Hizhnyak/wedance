@@ -13,6 +13,12 @@ export default {
     ],
 
     theme: {
+        screens: {
+            sm: '640px',     // mobile
+            md: '1000px',    // tablet (compact desktop)
+            lg: '1280px',    // desktop
+            xl: '1440px',    // large desktop
+        },
         extend: {
             fontFamily: {
                 title: ['Montserrat', 'sans-serif'], // Шрифт для заголовков
