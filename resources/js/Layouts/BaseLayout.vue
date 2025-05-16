@@ -2,7 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import Header from "@/Components/Header.vue";
 import Footer from "@/Components/Footer.vue";
-
+import FlashMessage from '@/Components/FlashMessage.vue'
 
 </script>
 
@@ -14,6 +14,7 @@ import Footer from "@/Components/Footer.vue";
         <!-- Контент страницы -->
         <main class="flex-grow pt-32">
             <slot />
+             <FlashMessage />
         </main>
 
         <!-- Подвал -->

@@ -21,6 +21,7 @@ use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\TeamController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Models\Course;
 use App\Models\User;
@@ -75,7 +76,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/like/toggle', [LikeController::class, 'toggle'])->name('like.toggle');
 });
 
-// 🔁 Редирект после логина по ролям
+// 🔁 Redirect after login
 Route::middleware(['auth'])->get('/redirect', function () {
     $user = auth()->user();
 
@@ -91,57 +92,53 @@ Route::middleware(['auth'])->get('/redirect', function () {
 });
 
 
-// 🛡 Панель администратора
+// 🛡 Admin panel
 Route::middleware(['auth', RoleMiddleware::class . ':admin'])
     ->prefix('admin')
     ->group(function () {
 
-        // Главная страница админки
+        // Dashboard admin
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.admin');
 
-        // Пользователи (CRUD)
+        // Users (CRUD)
         Route::controller(AdminDashboardController::class)->prefix('/users')->group(function () {
             Route::post('/', 'store')->name('admin.users.store');
             Route::put('/{user}', 'update')->name('admin.users.update');
             Route::delete('/{user}', 'destroy')->name('admin.users.destroy');
         });
 
-        // Курсы (CRUD)
+        // Courses (CRUD)
         Route::resource('/courses', AdminCourseController::class)
             ->only(['store', 'update', 'destroy'])
             ->names('admin.courses');
 
-        // События (CRUD)
+        // Events (CRUD)
         Route::resource('/events', EventController::class)
             ->except(['show', 'create', 'edit'])
             ->names('admin.events');
 
-        // Галерея
+        // Galerie
         Route::get('/gallery', [GalleryMediaController::class, 'index'])->name('admin.gallery');
         Route::post('/gallery', [GalleryMediaController::class, 'store'])->name('admin.gallery.store');
         Route::delete('/gallery/{media}', [GalleryMediaController::class, 'destroy'])->name('admin.gallery.destroy');
 
-        // Блог (CRUD)
+        // Blog (CRUD)
         Route::post('/blog', [BlogPostController::class, 'store'])->name('admin.blog.store');
         Route::put('/blog/{post}', [BlogPostController::class, 'update'])->name('admin.blog.update');
         Route::delete('/blog/{post}', [BlogPostController::class, 'destroy'])->name('admin.blog.destroy');
 
+        // Chats
         Route::delete('/chats/{chatSession}', [ChatController::class, 'destroy'])->name('admin.chats.destroy');
+
+        // Teams
+        Route::get('/team', [TeamController::class, 'index'])->name('admin.team.index');
+        Route::post('/team', [TeamController::class, 'store'])->name('admin.team.store');
+        Route::get('/team/{teamMember}/edit', [TeamController::class, 'edit'])->name('admin.team.edit');
+        Route::put('/team/{teamMember}', [TeamController::class, 'update'])->name('admin.team.update');
+        Route::delete('/team/{teamMember}', [TeamController::class, 'destroy'])->name('admin.team.destroy');
     });
 
-
-// 🧑‍🏫 Панель преподавателя
-// Route::middleware(['auth', RoleMiddleware::class . ':teacher'])
-//     ->get('/dashboard/teacher', [TeacherDashboardController::class, 'index'])
-//     ->name('dashboard.teacher');
-
-// Route::middleware(['auth', RoleMiddleware::class . ':teacher'])
-//     ->prefix('teacher')
-//     ->group(function () {
-//         Route::post('/courses', [TeacherDashboardController::class, 'store'])->name('teacher.courses.store');
-//         Route::put('/courses/{course}', [TeacherDashboardController::class, 'update'])->name('teacher.courses.update');
-//         Route::delete('/courses/{course}', [TeacherDashboardController::class, 'destroy'])->name('teacher.courses.destroy');
-//     });
+// Teacher panel
 Route::middleware(['auth', RoleMiddleware::class . ':teacher'])
     ->prefix('teacher')
     ->group(function () {
@@ -159,8 +156,13 @@ Route::middleware(['auth', RoleMiddleware::class . ':teacher'])
         Route::post('/events', [TeacherDashboardController::class, 'storeEvent'])->name('teacher.events.store');
         Route::put('/events/{event}', [TeacherDashboardController::class, 'updateEvent'])->name('teacher.events.update');
         Route::delete('/events/{event}', [TeacherDashboardController::class, 'destroyEvent'])->name('teacher.events.destroy');
+
+        Route::get('/my-profile', [TeamController::class, 'editOwn'])->name('teacher.team.edit');
+        Route::put('/my-profile', [TeamController::class, 'updateOwn'])->name('teacher.team.update');
     });
-// 👤 Панель пользователя
+
+
+// 👤 User profil
 Route::middleware(['auth', RoleMiddleware::class . ':user,teacher'])
     ->group(function () {
         Route::get('/dashboard/user', [UserDashboardController::class, 'index'])->name('dashboard.user');

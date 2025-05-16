@@ -109,4 +109,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Event::class, 'organizer_id');
     }
+
+    public function teamProfile()
+    {
+        return $this->hasOne(TeamMember::class);
+    }
 }

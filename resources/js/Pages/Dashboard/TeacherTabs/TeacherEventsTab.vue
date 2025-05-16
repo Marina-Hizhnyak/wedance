@@ -6,7 +6,7 @@
     <div class="flex justify-end mb-4">
       <button
         @click="openCreateForm"
-        class="px-4 py-2 bg-primary text-background font-bold rounded hover:bg-green-500"
+        class="px-4 py-2 bg-primary text-background font-bold rounded hover:bg-secondary"
       >
         ➕ Ajouter un événement
       </button>
@@ -91,7 +91,6 @@ const form = ref({
   description: '',
   date: '',
   location: '',
-  organizer_id: null,
 })
 
 const resetForm = () => {
@@ -101,7 +100,6 @@ const resetForm = () => {
     description: '',
     date: '',
     location: '',
-    organizer_id: null,
   }
 }
 

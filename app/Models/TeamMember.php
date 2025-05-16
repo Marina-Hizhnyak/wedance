@@ -6,5 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class TeamMember extends Model
 {
-    //
+    protected $fillable = [
+        'role',
+        'description',
+        'quote',
+        'telegram_url',
+        'whatsapp_url',
+        'vk_url',
+    ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

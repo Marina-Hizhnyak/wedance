@@ -17,7 +17,7 @@ class HomeController extends Controller
             'courses' => Course::limit(4)->get(),
             'events' => Event::orderBy('date', 'asc')->limit(3)->get(),
             'testimonials' => Testimonial::all(),
-            'teams' => TeamMember::all(),
+            'teams' => TeamMember::with('user')->get(),
         ]);
     }
 }

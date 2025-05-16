@@ -19,14 +19,15 @@ class TeacherDashboardController extends Controller
         $user = Auth::user();
         $courses = $user->teacherCourses()->with(['instructor', 'category', 'level'])->get();
         $events = $user->teacherEvents()->with('organizer')->latest()->get();
-
-
+        $user = auth()->user();
+        $profile = $user->teamProfile;
         return Inertia::render('Dashboard/Teacher', [
             'user' => $user,
             'courses' => $courses,
             'events' => $events,
             'categories' => CourseCategory::all(),
             'levels' => CourseLevel::all(),
+            'teamMember' => $profile,
         ]);
     }
 

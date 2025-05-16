@@ -8,6 +8,7 @@ import UserProfileTab from '@/Pages/Dashboard/UserTabs/ProfileTab.vue'
 // ✅ Teacher-specific tabs
 import TeacherCoursesTab from '@/Pages/Dashboard/TeacherTabs/TeacherCoursesTab.vue'
 import TeacherEventsTab from '@/Pages/Dashboard/TeacherTabs/TeacherEventsTab.vue'
+import TeacherTeamTab from '@/Pages/Dashboard/TeacherTabs/TeacherTeamTab.vue'
 
 // ✅ Get props from controller
 const props = defineProps({
@@ -16,6 +17,7 @@ const props = defineProps({
   events: Array,
   categories: Array,
   levels: Array,
+   teamMember: Object,
 })
 
 // ✅ State for active tab
@@ -26,7 +28,8 @@ const currentTabComponent = computed(() => {
   return {
     profile: UserProfileTab,
     courses: TeacherCoursesTab,
-    events: TeacherEventsTab,
+      events: TeacherEventsTab,
+     team: TeacherTeamTab,
   }[currentTab.value]
 })
 
@@ -53,13 +56,15 @@ function tabBtn(tab) {
             <button @click="currentTab = 'profile'" :class="tabBtn('profile')">👤 Profile</button>
             <button @click="currentTab = 'courses'" :class="tabBtn('courses')">📚 My Courses</button>
             <button @click="currentTab = 'events'" :class="tabBtn('events')">📅 My Events</button>
+            <button @click="currentTab = 'team'" :class="tabBtn('team')">💼 Team Profile</button>
+
           </nav>
         </aside>
 
         <!-- Main content -->
         <main class="flex-1 p-10 space-y-6">
           <!-- ✅ Render current tab component -->
-          <component :is="currentTabComponent" :user="user" :courses="courses" :events="events" :categories="categories" :levels="levels"/>
+          <component :is="currentTabComponent" :user="user" :courses="courses" :events="events" :categories="categories" :levels="levels" :team-member="teamMember"/>
         </main>
       </div>
     </div>

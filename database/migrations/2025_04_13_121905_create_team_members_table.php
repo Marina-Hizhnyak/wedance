@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('team_members', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('role');
             $table->string('photo');
             $table->string('avatar');
             $table->text('quote')->nullable();
             $table->text('description');
+            $table->string('telegram_url')->nullable();
+            $table->string('whatsapp_url')->nullable();
+            $table->string('vk_url')->nullable();
             $table->timestamps();
         });
     }
