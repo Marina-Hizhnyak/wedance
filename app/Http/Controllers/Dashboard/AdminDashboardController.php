@@ -11,6 +11,8 @@ use App\Models\CourseLevel;
 use App\Models\Event;
 use App\Models\GalleryMedia;
 use App\Models\Message;
+use App\Models\TeamMember;
+use App\Models\Testimonial;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +38,8 @@ class AdminDashboardController extends Controller
             'posts' => BlogPost::with('author')->latest()->get(),
             'messages' => Message::with('course')->latest()->get(),
             'chats' => $chats,
+            'teamMembers' => TeamMember::with('user')->get(),
+            'testimonials' => Testimonial::with('user')->get(),
         ]);
     }
 

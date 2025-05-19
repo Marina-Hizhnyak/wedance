@@ -13,6 +13,9 @@ class TeamMember extends Model
         'telegram_url',
         'whatsapp_url',
         'vk_url',
+        'user_id',
+        'avatar',
+        'photo',
     ];
     public function user()
     {

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('role');
-            $table->string('photo');
-            $table->string('avatar');
+            $table->string('photo')->nullable();
+            $table->string('avatar')->nullable();
             $table->text('quote')->nullable();
             $table->text('description');
             $table->string('telegram_url')->nullable();

@@ -23,10 +23,10 @@ class ProfileController extends Controller
         $user->email = $validated['email'];
 
         if ($request->hasFile('photo')) {
-            // Сохраняем новое фото
+
             $path = $request->file('photo')->store('/images/profiles', 'public');
 
-            // Удаляем старое фото если было
+
             if ($user->profile_photo_path) {
                 Storage::disk('public')->delete($user->profile_photo_path);
             }

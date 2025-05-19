@@ -16,7 +16,7 @@ const registerToCourse = () => {
     if (isSubmitting.value) return
     isSubmitting.value = true
 
-    router.post(`/courses/${props.course.id}/register`, {}, {
+    router.post(`/courses/${course.id}/register`, {}, {
         preserveScroll: true,
         onFinish: () => isSubmitting.value = false
     })
@@ -24,7 +24,6 @@ const registerToCourse = () => {
 </script>
 
 <template>
-    <pre>{{ props }}</pre>
     <Head :title="course.title" />
 
     <div class="bg-gradient-to-b from-[#1a0a05] to-background text-white min-h-screen font-inter">

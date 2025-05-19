@@ -32,7 +32,11 @@ class ChatService
     {
         $courses = \App\Models\Course::pluck('title')->implode(', ');
         $events = \App\Models\Event::orderBy('date')->limit(5)->pluck('title')->implode(', ');
-        $teachers = \App\Models\TeamMember::pluck('name')->implode(', ');
+        $teachers = \App\Models\TeamMember::with('user')
+            ->get()
+            ->map(fn($member) => $member->user?->name)
+            ->filter()
+            ->implode(', ');
         $blogs = \App\Models\BlogPost::orderByDesc('created_at')->limit(3)->pluck('title')->implode(', ');
         // $calendarEvents = \App\Models\CalendarEvent::orderBy('date')->limit(5)->pluck('title')->implode(', ');
 

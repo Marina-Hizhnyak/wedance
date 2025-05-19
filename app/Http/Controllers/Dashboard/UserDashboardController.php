@@ -13,7 +13,7 @@ class UserDashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-
+        $user->load('testimonials');
         $courses = $user->courses()->with('level', 'category')->get();
         $favorites = Auth::user()->likes()->with('likeable')->latest()->get();
         $chats = Auth::user()->chatSessions()->with('messages')->withCount('messages')->latest()->get();

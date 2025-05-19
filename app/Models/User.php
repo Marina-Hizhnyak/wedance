@@ -114,4 +114,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(TeamMember::class);
     }
+    public function testimonials()
+    {
+        return $this->hasMany(Testimonial::class);
+    }
 }

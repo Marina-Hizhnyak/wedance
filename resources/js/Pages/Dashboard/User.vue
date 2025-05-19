@@ -9,6 +9,7 @@ import CoursesTab from './UserTabs/CoursesTab.vue'
 import FavoritesTab from './UserTabs/FavoritesTab.vue'
 // import HistoryTab from './UserTabs/HistoryTab.vue'
 import ChatsTab from './UserTabs/ChatsTab.vue'
+import TestimonialTab from './UserTabs/TestimonialTab.vue'
 
 // Define page layout
 defineOptions({ layout: BaseLayout })
@@ -19,7 +20,7 @@ const props = defineProps({
   courses: Array,
   chats: Array,
   favorites: Array,
-  chats: Array,
+    chats: Array,
 })
 
 // Setup tab system
@@ -31,7 +32,8 @@ const currentTabComponent = computed(() => ({
     courses: CoursesTab,
     favorites: FavoritesTab,
     // history: HistoryTab,
-    chats: ChatsTab
+    chats: ChatsTab,
+    testimonial: TestimonialTab,
 }[currentTab.value]))
 
 // Button style helper
@@ -61,6 +63,8 @@ const user = usePage().props.user
           <button @click="currentTab = 'favorites'" :class="tabBtn('favorites')">⭐ Favorites</button>
           <button @click="currentTab = 'history'" :class="tabBtn('history')">📜 History</button>
           <button @click="currentTab = 'chats'" :class="tabBtn('chats')">💬 My Chats</button>
+          <button @click="currentTab = 'testimonial'" :class="tabBtn('testimonial')">📝 Mon témoignage</button>
+
         </nav>
       </aside>
 

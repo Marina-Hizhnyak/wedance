@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { Link, usePage } from '@inertiajs/vue3'
 import Breadcrumbs from '@/Components/Breadcrumbs.vue'
 import SearchBar from '@/Components/SearchBar.vue'
+import LogoutButton from '@/Components/LogoutButton.vue'
 
 const user = usePage().props.auth.user
 const csrfToken = usePage().props.csrf_token
@@ -92,8 +93,11 @@ const isActive = (path) => usePage().url === path
         <!-- Authenticated -->
         <template v-else>
           <Link href="/redirect" class="md:px-2 lg:px-4 py-1.5 bg-primary text-black text-sm md:text-xs lg:text-sm font-bold font-title rounded-full shadow-md hover:bg-secondary transition inline-flex items-center justify-center whitespace-nowrap">Mon espace</Link>
-          <Link method="post" as="button" href="/logout" class="md:px-2 lg:px-4 py-1.5 border border-primary text-white text-sm md:text-xs lg:text-sm rounded-full font-bold whitespace-nowrap">Se déconnecter</Link>
-        </template>
+            <LogoutButton />
+          <!-- <Link method="post" as="button" href="/logout" class="md:px-2 lg:px-4 py-1.5 border border-primary text-white text-sm md:text-xs lg:text-sm rounded-full font-bold whitespace-nowrap">Se déconnecter</Link> -->
+
+
+         </template>
       </div>
 
       <!-- Mobile menu toggle button -->

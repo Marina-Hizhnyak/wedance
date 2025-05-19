@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function index()
     {
         return Inertia::render('Home/Index', [
-            'courses' => Course::limit(4)->get(),
+            'courses' => Course::with('instructor')->limit(4)->get(),
             'events' => Event::orderBy('date', 'asc')->limit(3)->get(),
             'testimonials' => Testimonial::all(),
             'teams' => TeamMember::with('user')->get(),

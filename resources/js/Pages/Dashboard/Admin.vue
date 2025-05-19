@@ -9,6 +9,8 @@ import GalleryTab from './tabs/GalleryTab.vue'
 import BlogTab from './tabs/BlogTab.vue'
 import MessagesTab from './tabs/MessagesTab.vue'
 import ChatsTab from './tabs/ChatsTab.vue'
+import TeamMembersTab from './tabs/TeamMembersTab.vue'
+import TestimonialTab from './tabs/TestimonialsTab.vue'
 
 import { usePage } from '@inertiajs/vue3'
 
@@ -28,7 +30,9 @@ const props = defineProps({
    media: Array,
     posts: Array,
    messages: Array,
-   chats: Array,
+    chats: Array,
+    teamMembers: Array,
+      testimonials: Array,
 })
 const currentTabComponent = computed(() => {
   return {
@@ -40,6 +44,8 @@ const currentTabComponent = computed(() => {
     blog: BlogTab,
     messages: MessagesTab,
     chats: ChatsTab,
+      teamMembers: TeamMembersTab,
+      testimonials: TestimonialTab,
   }[currentTab.value]
 })
 
@@ -70,7 +76,8 @@ function tabBtn(tab) {
         <button @click="currentTab = 'blog'" :class="tabBtn('blog')">📝 Blog</button>
         <button @click="currentTab = 'messages'" :class="tabBtn('messages')">📨 Messages</button>
         <button @click="currentTab = 'chats'" :class="tabBtn('chats')">💬 Chats</button>
-
+        <button @click="currentTab = 'teamMembers'" :class="tabBtn('teamMembers')">💬 TeamMembers Profiles</button>
+        <button @click="currentTab = 'testimonials'" :class="tabBtn('testimonials')">💬 Testimonials</button>
       </nav>
     </aside>
 
@@ -87,7 +94,10 @@ function tabBtn(tab) {
         :media="media"
         :posts="posts"
         :messages="messages"
-        :chats="chats"/>
+        :chats="chats"
+        :teamMembers="teamMembers"
+        :testimonials="testimonials"
+        />
     </main>
   </div>
 </template>

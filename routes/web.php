@@ -22,6 +22,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TestimonialController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Models\Course;
 use App\Models\User;
@@ -41,8 +42,10 @@ Route::middleware([
     })->name('dashboard');
 });
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
 Route::get('/courses/{categorySlug}', [CourseController::class, 'byCategory'])->name('courses.byCategory');
 Route::get('/courses/{categorySlug}/{levelSlug}', [CourseController::class, 'byCategoryAndLevel'])->name('courses.byCategoryAndLevel');
+Route::get('/course/{course}', [CourseController::class, 'show'])->name('courses.show');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/evenements', [EventController::class, 'index'])->name('events');
@@ -74,6 +77,9 @@ Route::middleware(['auth'])->group(function () {
         ->name('courses.unregister');
     Route::post('/blog/{post}/comment', [BlogCommentController::class, 'store'])->name('blog.comment');
     Route::post('/like/toggle', [LikeController::class, 'toggle'])->name('like.toggle');
+
+    Route::resource('testimonials', TestimonialController::class)
+        ->only(['store', 'update', 'destroy']);
 });
 
 // 🔁 Redirect after login
@@ -134,8 +140,13 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])
         Route::get('/team', [TeamController::class, 'index'])->name('admin.team.index');
         Route::post('/team', [TeamController::class, 'store'])->name('admin.team.store');
         Route::get('/team/{teamMember}/edit', [TeamController::class, 'edit'])->name('admin.team.edit');
-        Route::put('/team/{teamMember}', [TeamController::class, 'update'])->name('admin.team.update');
+        Route::put('/team/{teamMember}', [TeamController::class, 'updateTeamMemberProfil'])->name('admin.team.update');
         Route::delete('/team/{teamMember}', [TeamController::class, 'destroy'])->name('admin.team.destroy');
+
+        // Testimonials
+        Route::get('/testimonials', [TestimonialController::class, 'indexAdmin'])->name('admin.testimonials.index');
+        Route::put('/testimonials/{testimonial}', [TestimonialController::class, 'updateAdmin'])->name('admin.testimonials.update');
+        Route::delete('/testimonials/{testimonial}', [TestimonialController::class, 'destroyAdmin'])->name('admin.testimonials.destroy');
     });
 
 // Teacher panel
