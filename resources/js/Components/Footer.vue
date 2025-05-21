@@ -38,9 +38,9 @@
       </div>
 
       <!-- Section 2: Navigation links and social icons -->
-      <div class="w-full md:w-1/3 px-4 space-y-6 text-center md:text-left">
+      <div class="w-full md:w-1/3 px-4 space-y-6 text-left">
         <!-- Navigation links -->
-        <ul class="space-y-6 px-10 text-base text-text text-body">
+        <ul class="space-y-6 md:px-10 text-base text-text text-body">
           <li><a href="/about" class="hover:text-[#F9B233] transition">À propos</a></li>
           <li><a href="/calendar" class="hover:text-[#F9B233] transition">Calendrier</a></li>
           <li><a href="/evenements" class="hover:text-[#F9B233] transition">Événements</a></li>
@@ -72,7 +72,7 @@
         </a>
     </div>
 
-    <img src="/images/backgrounds/couple.png" alt="Dance icon" class="absolute -top-10 left-80 w-auto h-[300px]" />
+    <img src="/images/backgrounds/couple.png" alt="Dance icon" class="absolute xl:-top-10 xl:left-60 xl:h-[300px] lg:-top-5 lg:left-48 lg:h-[250px] md:top-0 md:left-40 md:h-[200px] sm:h-[200px] sm:top-0 sm:left-[400px] h-[200px] top-0 left-[300px] w-auto" />
 
     <!-- Footer info -->
         <div class="text-sm text-gray-400 mt-8 relative z-10">

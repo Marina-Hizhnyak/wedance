@@ -13,7 +13,7 @@
           Wedance – votre école de danse spécialisée en salsa et bachata.
         </p>
         <a
-          href="/register"
+          href="/inscription"
           class="inline-block px-8 py-3 rounded-full bg-primary text-black font-semibold font-title text-base tracking-wider shadow hover:bg-secondary transition"
         >
           S'INSCRIRE

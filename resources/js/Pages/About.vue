@@ -5,7 +5,7 @@ defineOptions({ layout: BaseLayout })
 </script>
 
 <template>
-  <div class="bg-gradient-to-b from-[#1a0a05] to-background text-white min-h-screen font-inter">
+  <div class="bg-gradient-symmetric text-white min-h-screen font-inter">
     <!-- Title -->
     <section class="text-center pt-24 pb-10">
       <h1 class="text-5xl font-bold text-primary font-title">À propos de Wedance</h1>

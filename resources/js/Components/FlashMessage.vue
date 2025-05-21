@@ -5,7 +5,6 @@ import { computed, ref, watch } from 'vue'
 const flash = computed(() => usePage().props.flash?.success || null)
 const visible = ref(false)
 
-// Автоматическое появление и исчезновение
 watch(flash, (message) => {
   if (message) {
     visible.value = true

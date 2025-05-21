@@ -9,7 +9,7 @@ class Event extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'date', 'location', 'organizer_id'];
+    protected $fillable = ['title', 'description', 'date', 'location', 'organizer_id', 'slug'];
 
     public function organizer()
     {

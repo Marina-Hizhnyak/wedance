@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bg-background">
     <ChatModal />
     <CTASection />
     <HeroSection />

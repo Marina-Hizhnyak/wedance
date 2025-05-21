@@ -7,7 +7,7 @@ defineProps({ events: Array })
 </script>
 
 <template>
-  <div class="bg-gradient-to-b from-[#1a0a05] to-background text-white min-h-screen font-inter">
+  <div class="bg-gradient-symmetric text-white min-h-screen font-inter">
     <!-- Title -->
     <section class="text-center pt-24 pb-12">
       <h1 class="text-5xl font-bold text-primary font-title">Nos Événements</h1>
@@ -28,7 +28,7 @@ defineProps({ events: Array })
       <p class="text-sm text-gray-300 mb-4 line-clamp-3">{{ event.description }}</p>
       <p class="text-xs text-gray-400 mb-4">📅 {{ event.date }}</p>
 <Link
-    :href="route('events.show', event.id)"
+    :href="route('events.show', event.slug)"
     class="bg-primary text-black px-4 py-2 font-bold rounded-full hover:scale-105 transition block text-center"
 >
     Voir les détails

@@ -25,8 +25,7 @@ const registerToCourse = () => {
 
 <template>
     <Head :title="course.title" />
-
-    <div class="bg-gradient-to-b from-[#1a0a05] to-background text-white min-h-screen font-inter">
+    <div class="bg-gradient-symmetric text-white min-h-screen font-inter">
         <!-- Page Header -->
         <section class="text-center pt-24 pb-12">
             <h1 class="text-5xl font-bold text-yellow-400 font-title">{{ course.title }}</h1>
@@ -34,9 +33,9 @@ const registerToCourse = () => {
         </section>
 
         <!-- Course Content -->
-        <section class="max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-8 px-6 md:px-8 pb-20">
+        <section class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-8 px-6 md:px-8 pb-20">
             <!-- Course Image -->
-            <div class="w-full md:w-1/2">
+            <div class="flex w-auto md:w-1/2 justify-center items-center h-full min-h-[300px]">
                 <img
                     v-if="course.image"
                     :src="`/images/courses/${course.image}`"
@@ -55,12 +54,69 @@ const registerToCourse = () => {
                     <div><strong>Price:</strong> {{ course.price }} €</div>
                 </div>
 
+
+                <!-- Instructor Info -->
+                <div class="pt-8 border-t border-gray-700 mt-6">
+                <h2 class="text-2xl font-semibold text-yellow-400 mb-4">Votre instructeur</h2>
+
+                <div class="flex items-start gap-6">
+                    <!-- Instructor photo -->
+                    <div class="shrink-0">
+                    <img
+                        v-if="course.instructor?.team_profile?.photo"
+                        :src="course.instructor.team_profile.photo"
+                        alt="Photo du professeur"
+                        class="w-20 h-20 rounded-full object-cover border-2 border-yellow-400 shadow"
+                    />
+                    </div>
+
+                    <!-- Instructor info -->
+                    <div class="space-y-2">
+                    <p class="text-lg font-bold text-white">
+                        {{ course.instructor?.name }}
+                    </p>
+                    <p class="text-sm text-yellow-300 italic">
+                        {{ course.instructor?.team_profile?.role }}
+                    </p>
+
+                    <!-- Social icons -->
+                    <div class="flex gap-4 mt-3 text-yellow-400 text-xl">
+                        <a
+                        v-if="course.instructor?.team_profile?.telegram_url"
+                        :href="course.instructor.team_profile.telegram_url"
+                        target="_blank"
+                        class="hover:text-secondary transition"
+                        >
+                        <img src="/images/icons/lettre.svg" alt="Telegram" class="w-5 h-5" />
+                        </a>
+                        <a
+                        v-if="course.instructor?.team_profile?.whatsapp_url"
+                        :href="course.instructor.team_profile.whatsapp_url"
+                        target="_blank"
+                        class="hover:text-secondary transition"
+                        >
+                        <img src="/images/icons/phone.svg" alt="WhatsApp" class="w-5 h-5" />
+                        </a>
+                        <a
+                        v-if="course.instructor?.team_profile?.vk_url"
+                        :href="course.instructor.team_profile.vk_url"
+                        target="_blank"
+                        class="hover:text-secondary transition"
+                        >
+                        <img src="/images/icons/vk.svg" alt="VK" class="w-5 h-5" />
+                        </a>
+                    </div>
+                    </div>
+                </div>
+                </div>
+
+
                 <!-- Register Button -->
                 <div class="pt-4">
                     <button
                         v-if="!is_registered"
                         @click="registerToCourse"
-                        class="inline-block bg-gradient-to-r from-yellow-300 to-orange-400 text-black font-bold px-8 py-3 rounded-full shadow-md hover:scale-105 transition"
+                        class="inline-block bg-primary hover:bg-secondary text-black font-bold px-8 py-3 rounded-full shadow-md hover:scale-105 transition"
                     >
                         Participer
                     </button>
@@ -75,7 +131,7 @@ const registerToCourse = () => {
 
                 <!-- Back link -->
                 <div class="pt-4">
-                    <a href="/courses" class="text-secondary hover:underline">&larr; Retour aux cours</a>
+                    <a href="/courses" class="text-secondary hover:underline">&larr; Tous les cours </a>
                 </div>
             </div>
         </section>

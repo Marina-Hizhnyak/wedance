@@ -45,11 +45,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
 Route::get('/courses/{categorySlug}', [CourseController::class, 'byCategory'])->name('courses.byCategory');
 Route::get('/courses/{categorySlug}/{levelSlug}', [CourseController::class, 'byCategoryAndLevel'])->name('courses.byCategoryAndLevel');
-Route::get('/course/{course}', [CourseController::class, 'show'])->name('courses.show');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/evenements', [EventController::class, 'index'])->name('events');
-Route::get('/evenements/{event}', [EventController::class, 'show'])->name('events.show');
+Route::get('/evenements/{slug}', [EventController::class, 'show'])->name('events.show');
+
 Route::get('/inscription', [InscriptionController::class, 'index'])->name('inscription');
 Route::get('/gallery', [GalleryMediaController::class, 'index'])->name('gallery');
 Route::get('/blog', [BlogPostController::class, 'index'])->name('blog.index');

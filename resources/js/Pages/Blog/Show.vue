@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-4xl mx-auto px-4 py-12 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-12 text-white">
     <!-- Post Info -->
     <div class="mb-6">
       <h1 class="text-3xl md:text-4xl font-bold text-primary mb-2">{{ post.title }}</h1>
@@ -8,24 +8,33 @@
       </p>
     </div>
 
-    <!-- Post Image -->
-    <div v-if="post.image" class="mb-6">
-      <img :src="`/storage/${post.image}`" :alt="post.title" class="w-full rounded shadow" />
+    <!-- Image + Content block -->
+    <div v-if="post.image" class="md:flex md:gap-8 mb-10">
+      <!-- Post Image -->
+      <div class="md:w-1/3 mb-6 md:mb-0">
+        <img
+          :src="post.image"
+          :alt="post.title"
+          class="w-full h-auto rounded shadow object-cover"
+        />
+      </div>
+
+      <!-- Post Content -->
+      <div class="md:w-2/3 prose prose-invert max-w-none" v-html="post.content" />
     </div>
 
-        <!-- Like Button -->
+    <div v-else class="prose prose-invert max-w-none mb-10" v-html="post.content" />
+
+    <!-- Like Button -->
     <div class="mb-6 flex items-center space-x-3">
-    <button v-if="user"
+      <button v-if="user"
         @click="toggleLike"
         class="px-4 py-1 text-sm font-bold rounded bg-red-600 hover:bg-red-700 text-white"
-    >
+      >
         ❤️ {{ isLiked ? 'Unlike' : 'Like' }}
-    </button>
-    <span class="text-sm text-gray-300">❤️ {{ post.likes.length }} likes</span>
+      </button>
+      <span class="text-sm text-gray-300">❤️ {{ post.likes.length }} likes</span>
     </div>
-
-    <!-- Post Content -->
-    <div class="prose prose-invert max-w-none" v-html="post.content" />
 
     <!-- Comment Form -->
     <div v-if="user" class="mt-12">
@@ -51,7 +60,7 @@
     </div>
 
     <!-- Comment List -->
-    <div v-if="post.comments && post.comments.length"   ref="commentSection" class="mt-10 space-y-6">
+    <div v-if="post.comments && post.comments.length" ref="commentSection" class="mt-10 space-y-6">
       <h2 class="text-xl font-bold text-primary mb-2">Commentaires</h2>
       <div
         v-for="comment in post.comments"
@@ -85,6 +94,7 @@ const user = usePage().props.auth?.user
 const form = useForm({
   content: '',
 })
+
 const isLiked = computed(() => {
   if (!user || !post.likes) return false
   return post.likes.some(like => like.user_id === user.id)
@@ -96,18 +106,15 @@ function toggleLike() {
     likeable_id: post.id,
   }, {
     preserveScroll: true,
-    onSuccess: (page) => {
+    onSuccess: () => {
       if (isLiked.value) {
-        post.likes = post.likes.filter(
-          (like) => like.user_id !== user.id
-        )
+        post.likes = post.likes.filter(like => like.user_id !== user.id)
       } else {
         post.likes.push({ user_id: user.id })
       }
     }
   })
 }
-
 
 const commentSection = ref(null)
 
@@ -132,3 +139,4 @@ function formatDate(dateStr) {
   })
 }
 </script>
+

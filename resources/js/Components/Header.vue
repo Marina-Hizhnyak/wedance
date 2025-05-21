@@ -38,7 +38,7 @@ const isActive = (path) => usePage().url === path
 
 <template>
   <!-- Main header -->
-  <header class="fixed w-full z-50 shadow-lg bg-background">
+  <header class="fixed w-full z-50 bg-background">
     <!-- Container with max-width for large screens -->
     <div class="w-[90%] max-w-[1440px] mx-auto flex justify-between items-center px-4 md:px-8 py-3">
       <!-- Logo -->
@@ -148,7 +148,7 @@ const isActive = (path) => usePage().url === path
     </div>
 
     <!-- Breadcrumbs and search under header -->
-    <div class="w-[90%] max-w-[1440px] mx-auto flex flex-row items-center justify-between gap-2 my-3">
+    <div class="w-[90%] max-w-[1440px] mx-auto bg-background flex flex-row items-center justify-between gap-2 my-3">
         <Breadcrumbs />
         <SearchBar />
     </div>

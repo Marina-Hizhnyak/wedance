@@ -5,3 +5,9 @@
 [x-cloak] {
     display: none;
 }
+
+@layer utilities {
+    .bg-gradient-symmetric {
+        background-image: linear-gradient(to bottom, theme('colors.background'), #1a0a05, theme('colors.background'));
+    }
+}

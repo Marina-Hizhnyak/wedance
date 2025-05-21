@@ -6,7 +6,7 @@
     <div class="flex justify-end mb-4">
       <button
         @click="openCreateForm"
-        class="px-4 py-2 bg-primary text-background font-bold rounded hover:bg-green-500"
+        class="px-4 py-2 bg-primary text-background font-bold rounded hover:bg-secondary"
       >
         ➕ Ajouter un utilisateur
       </button>
@@ -25,14 +25,21 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="u in users" :key="u.id" class="hover:bg-[#2a2a2a] text-gray-100">
-            <td class="px-4 py-2 border-b border-[#333]">{{ u.name }}</td>
-            <td class="px-4 py-2 border-b border-[#333]">{{ u.email }}</td>
-            <td class="px-4 py-2 border-b border-[#333]">{{ formatDate(u.created_at) }}</td>
-            <td class="px-4 py-2 border-b border-[#333] capitalize">{{ u.role }}</td>
-            <td class="px-4 py-2 border-b border-[#333] space-x-2">
-              <button @click="editUser(u)" class="px-3 py-1 text-sm font-bold bg-yellow-500 text-black rounded hover:bg-yellow-400">Éditer</button>
-              <button @click="deleteUser(u.id)" class="px-3 py-1 text-sm font-bold bg-red-600 text-white rounded hover:bg-red-500">Supprimer</button>
+          <tr
+            v-for="(u, index) in users"
+            :key="u.id"
+            :class="[
+              'hover:bg-[#2a2a2a] text-gray-100',
+              index === users.length - 1 ? '' : 'border-b border-[#333]'
+            ]"
+          >
+            <td class="px-4 py-2">{{ u.name }}</td>
+            <td class="px-4 py-2">{{ u.email }}</td>
+            <td class="px-4 py-2">{{ formatDate(u.created_at) }}</td>
+            <td class="px-4 py-2 capitalize">{{ u.role }}</td>
+            <td class="px-4 py-2 space-x-2">
+              <button @click="editUser(u)" class="px-3 py-1 text-sm font-bold bg-primary text-black rounded hover:bg-secondary">Éditer</button>
+              <button @click="deleteUser(u.id)" class="px-3 py-1 text-sm font-bold bg-accent text-white rounded hover:bg-secondary">Supprimer</button>
             </td>
           </tr>
         </tbody>
@@ -40,27 +47,31 @@
     </div>
 
     <!-- Create User Form -->
-    <div v-if="isCreating" class="bg-[#1e1e1e] p-6 rounded-lg border border-primary max-w-xl mb-10">
+    <div
+      v-if="isCreating"
+      ref="createFormSection"
+      class="scroll-mt-36 bg-[#1e1e1e] p-6 rounded-lg border border-primary max-w-xl mb-10"
+    >
       <h2 class="text-xl font-bold mb-4 text-primary">Ajouter un utilisateur</h2>
 
       <div class="mb-4">
         <label class="block text-sm mb-1">Nom</label>
-        <input v-model="createForm.name" type="text" class="w-full px-4 py-2 rounded bg-background border" />
+        <input v-model="createForm.name" type="text" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0" />
       </div>
 
       <div class="mb-4">
         <label class="block text-sm mb-1">Email</label>
-        <input v-model="createForm.email" type="email" class="w-full px-4 py-2 rounded bg-background border" />
+        <input v-model="createForm.email" type="email" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0" />
       </div>
 
       <div class="mb-4">
         <label class="block text-sm mb-1">Mot de passe</label>
-        <input v-model="createForm.password" type="password" class="w-full px-4 py-2 rounded bg-background border" />
+        <input v-model="createForm.password" type="password" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0" />
       </div>
 
       <div class="mb-4">
         <label class="block text-sm mb-1">Rôle</label>
-        <select v-model="createForm.role" class="w-full px-4 py-2 rounded bg-background border">
+        <select v-model="createForm.role" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0">
           <option value="user">Utilisateur</option>
           <option value="teacher">Enseignant</option>
           <option value="admin">Administrateur</option>
@@ -74,22 +85,26 @@
     </div>
 
     <!-- Edit User Form -->
-    <div v-if="isEditing" class="bg-[#1e1e1e] p-6 rounded-lg border border-primary max-w-xl">
+    <div
+      v-if="isEditing"
+      ref="editFormSection"
+      class="scroll-mt-36 bg-[#1e1e1e] p-6 rounded-lg border border-primary max-w-xl"
+    >
       <h2 class="text-xl font-bold mb-4 text-primary">Modifier l'utilisateur</h2>
 
       <div class="mb-4">
         <label class="block text-sm mb-1">Nom</label>
-        <input v-model="editForm.name" type="text" class="w-full px-4 py-2 rounded bg-background border" />
+        <input v-model="editForm.name" type="text" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0" />
       </div>
 
       <div class="mb-4">
         <label class="block text-sm mb-1">Email</label>
-        <input v-model="editForm.email" type="email" class="w-full px-4 py-2 rounded bg-background border" />
+        <input v-model="editForm.email" type="email" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0" />
       </div>
 
       <div class="mb-4">
         <label class="block text-sm mb-1">Rôle</label>
-        <select v-model="editForm.role" class="w-full px-4 py-2 rounded bg-background border">
+        <select v-model="editForm.role" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0">
           <option value="user">Utilisateur</option>
           <option value="teacher">Enseignant</option>
           <option value="admin">Administrateur</option>
@@ -105,15 +120,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { router, usePage } from '@inertiajs/vue3'
+import { ref, nextTick } from 'vue'
+import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
   users: Array,
   user: Object,
 })
-// Create form
+
 const isCreating = ref(false)
+const isEditing = ref(false)
+const createFormSection = ref(null)
+const editFormSection = ref(null)
+
 const createForm = ref({
   name: '',
   email: '',
@@ -121,8 +140,6 @@ const createForm = ref({
   role: 'user',
 })
 
-// Edit form
-const isEditing = ref(false)
 const editForm = ref({
   id: null,
   name: '',
@@ -130,9 +147,12 @@ const editForm = ref({
   role: 'user',
 })
 
-// Actions
+// Open forms and scroll
 const openCreateForm = () => {
   isCreating.value = true
+  nextTick(() => {
+    createFormSection.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  })
 }
 
 const cancelCreate = () => {
@@ -145,13 +165,6 @@ const cancelCreate = () => {
   }
 }
 
-const storeUser = () => {
-  router.post('/admin/users', createForm.value, {
-    preserveScroll: true,
-    onSuccess: cancelCreate,
-  })
-}
-
 const editUser = (user) => {
   isEditing.value = true
   editForm.value = {
@@ -160,10 +173,20 @@ const editUser = (user) => {
     email: user.email,
     role: user.role || 'user',
   }
+  nextTick(() => {
+    editFormSection.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  })
 }
 
 const closeEditModal = () => {
   isEditing.value = false
+}
+
+const storeUser = () => {
+  router.post('/admin/users', createForm.value, {
+    preserveScroll: true,
+    onSuccess: cancelCreate,
+  })
 }
 
 const saveUser = () => {

@@ -17,10 +17,12 @@ class EventController extends Controller
         ]);
     }
 
-    public function show(Event $event)
+    public function show($slug)
     {
+        $event = Event::where('slug', $slug)->firstOrFail();
+
         return Inertia::render('EventShow', [
-            'event' => $event
+            'event' => $event,
         ]);
     }
 

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email');
             $table->text('message');
             $table->unsignedBigInteger('course_id')->nullable();
+            $table->boolean('course_trial')->default(false);
             $table->timestamps();
         });
     }

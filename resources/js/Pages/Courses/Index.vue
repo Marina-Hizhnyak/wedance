@@ -37,13 +37,19 @@ const registerToCourse = (courseId) => {
         }
     })
 }
+
+const loadedImages = ref({})
+
+const handleImageLoad = (id) => {
+  loadedImages.value[id] = true
+}
 </script>
 
 <template>
-    <section class="px-4 md:px-8 lg:px-16 py-10 bg-background min-h-screen">
+    <section class="px-4 md:px-8 lg:px-16 py-10 bg-gradient-symmetric min-h-screen">
         <div class="max-w-7xl mx-auto">
-            <h1 class="text-3xl font-extrabold text-accent mb-8">
-                Cours : {{ title }}
+            <h1 class="text-3xl font-extrabold text-accent mb-8 text-center">
+                Nos cours : {{ title }}
             </h1>
 
             <!-- Courses Grid -->
@@ -55,47 +61,64 @@ const registerToCourse = (courseId) => {
                 >
                     <!-- Clickable Image -->
                     <Link :href="`/courses/${course.category.slug}/${course.level.slug}`">
-                        <img
+                        <div class="relative w-full pb-[75%] overflow-hidden rounded-t-lg">
+                            <img
                             :src="`/images/courses/${course.image}`"
-                            alt="course image"
-                            class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                            :alt="`Image de ${course.title}`"
+                            loading="lazy"
+                            @load="handleImageLoad(course.id)"
+                            :class="[
+                            'absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-105',
+                            loadedImages[course.id] ? 'opacity-100' : 'opacity-0'
+                            ]"
                         />
+                        </div>
                     </Link>
 
                     <div class="p-5">
                         <!-- Clickable Title -->
                         <Link :href="`/courses/${course.category.slug}/${course.level.slug}`">
-                            <h2 class="text-xl font-semibold text-primary mb-2 hover:underline">
+                            <h2 class="text-xl font-semibold text-accent mb-2 hover:underline text-center">
                                 {{ course.title }}
                             </h2>
                         </Link>
 
-                        <p class="text-gray-600 text-sm">{{ course.description }}</p>
+                        <!-- <p class="text-gray-600 text-sm">{{ course.description }}</p> -->
 
-                        <div class="mt-4 flex flex-col gap-1 text-sm text-gray-500">
-                            <span><strong>Durée:</strong> {{ course.duration }}</span>
-                            <span><strong>Jour:</strong> {{ course.day_time }}</span>
-                            <span><strong>Prix:</strong> {{ course.price }} €</span>
+                        <div class="mt-4 flex flex-col gap-1 text-sm text-white text-center">
+                            <!-- <span><strong>Durée:</strong> {{ course.duration }}</span> -->
+                            <span>{{ course.day_time }}</span>
+                            <!-- <span><strong>Prix:</strong> {{ course.price }} €</span> -->
                             <span v-if="course.level?.name"><strong>Niveau:</strong> {{ course.level.name }}</span>
                         </div>
                     </div>
 
                     <!-- Register Button -->
-                    <button
-                        v-if="!course.is_registered"
-                        @click="registerToCourse(course.id)"
-                        class="mx-5 mb-5 bg-primary text-black font-bold px-4 py-2 rounded-full hover:scale-105 transition"
-                    >
-                        Participer
-                    </button>
+                <div class="mx-5 mb-5 flex justify-between gap-3">
+                <button
+                    v-if="!course.is_registered"
+                    @click="registerToCourse(course.id)"
+                    class="flex-1 bg-primary text-black font-bold px-4 py-2 rounded-full hover:scale-105 transition"
+                >
+                    Participer
+                </button>
 
-                    <button
-                        v-else
-                        disabled
-                        class="mx-5 mb-5 bg-gray-400 text-white font-bold px-4 py-2 rounded-full cursor-not-allowed"
-                    >
-                        Déjà inscrit
-                    </button>
+                <button
+                    v-else
+                    disabled
+                    class="flex-1 bg-gray-400 text-white font-bold px-4 py-2 rounded-full cursor-not-allowed"
+                >
+                    Déjà inscrit
+                </button>
+
+                <Link
+                    :href="`/courses/${course.category.slug}/${course.level.slug}`"
+                    class="flex-1 border border-primary text-primary font-bold px-4 py-2 rounded-full text-center hover:bg-primary hover:text-black transition"
+                >
+                    LIRE PLUS
+                </Link>
+                </div>
+
                 </div>
             </div>
 

@@ -36,7 +36,7 @@ const props = defineProps({
         <!-- Call-to-action button -->
         <a
           href="/inscription"
-          class="inline-block bg-gradient-to-r from-yellow-300 to-orange-400 text-black font-bold px-8 py-3 rounded-full shadow-md hover:scale-105 transition"
+          class="inline-block bg-primary text-black font-bold px-8 py-3 rounded-full shadow-md hover:scale-105 hover:bg-secondary transition"
         >
           S’inscrire maintenant
         </a>

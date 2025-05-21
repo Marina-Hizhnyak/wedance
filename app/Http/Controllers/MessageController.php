@@ -14,6 +14,7 @@ class MessageController extends Controller
             'email' => 'required|email|max:255',
             'message' => 'required|string',
             'course_id' => 'nullable|exists:courses,id',
+            'course_trial' => 'nullable|boolean',
         ]);
 
         Message::create($validated);

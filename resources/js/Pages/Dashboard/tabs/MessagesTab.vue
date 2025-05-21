@@ -10,6 +10,7 @@
             <th class="px-4 py-2 border-b border-primary">Email</th>
             <th class="px-4 py-2 border-b border-primary">Message</th>
             <th class="px-4 py-2 border-b border-primary">Cours</th>
+            <th class="px-4 py-2 border-b border-primary">Essai gratuit</th>
             <th class="px-4 py-2 border-b border-primary">Date</th>
           </tr>
         </thead>
@@ -19,6 +20,10 @@
             <td class="px-4 py-2 border-b border-[#333]">{{ msg.email }}</td>
             <td class="px-4 py-2 border-b border-[#333]">{{ msg.message }}</td>
             <td class="px-4 py-2 border-b border-[#333]">{{ msg.course?.title ?? '–' }}</td>
+            <td class="px-4 py-2 border-b border-[#333]">
+            <span v-if="msg.course_trial" class="text-primary font-semibold">Oui</span>
+            <span v-else class="text-gray-400 italic">Non</span>
+            </td>
             <td class="px-4 py-2 border-b border-[#333]">{{ formatDate(msg.created_at) }}</td>
           </tr>
         </tbody>

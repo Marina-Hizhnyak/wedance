@@ -53,30 +53,31 @@ class CourseController extends Controller
         $category = CourseCategory::where('slug', $categorySlug)->firstOrFail();
         $level = CourseLevel::where('slug', $levelSlug)->firstOrFail();
 
-        $course = Course::with(['level', 'category', 'users'])
+        $course = Course::with(['level', 'category', 'users', 'instructor.teamProfile'])
             ->where('course_category_id', $category->id)
             ->where('course_level_id', $level->id)
             ->firstOrFail();
 
         $is_registered = $user && $course->users->contains($user->id);
-
+        // dd($course);
         return Inertia::render('Courses/Show', [
             'course' => $course,
             'is_registered' => $is_registered,
         ]);
     }
 
-    public function show(Course $course)
-    {
-        $user = Auth::user();
+    // public function show(Course $course)
+    // {
+    //     $user = Auth::user();
 
-        $course->load(['instructor', 'category', 'level', 'users']);
+    //     $course->load(['instructor', 'category', 'level', 'users']);
 
-        $is_registered = $user && $course->users->contains($user->id);
+    //     $is_registered = $user && $course->users->contains($user->id);
 
-        return Inertia::render('Courses/Show', [
-            'course' => $course,
-            'is_registered' => $is_registered,
-        ]);
-    }
+    //     // dd($course);
+    //     return Inertia::render('Courses/Show', [
+    //         'course' => $course,
+    //         'is_registered' => $is_registered,
+    //     ]);
+    // }
 }

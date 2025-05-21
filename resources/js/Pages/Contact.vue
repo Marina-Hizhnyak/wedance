@@ -20,7 +20,7 @@ function submit() {
 </script>
 
 <template>
-  <div class="bg-gradient-to-b from-[#1a0a05] to-background text-white min-h-screen font-inter">
+  <div class="bg-gradient-symmetric text-white min-h-screen font-inter">
     <!-- Title -->
     <section class="text-center pt-24 pb-20">
       <h1 class="text-4xl font-semibold text-primary font-title">Contactez Nous</h1>

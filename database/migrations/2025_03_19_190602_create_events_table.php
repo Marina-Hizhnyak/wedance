@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('location');
             $table->unsignedBigInteger('organizer_id')->nullable();
             $table->string('image')->nullable();
+            $table->string('slug')->unique();
             $table->timestamps();
             $table->foreign('organizer_id')->references('id')->on('users')->onDelete('set null');
         });

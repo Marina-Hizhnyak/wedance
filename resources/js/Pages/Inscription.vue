@@ -14,10 +14,9 @@ const form = useForm({
   email: '',
   message: '',
   course_id: '',
+  course_trial: false,
 })
 
-// Flash message from backend
-const flash = computed(() => usePage().props.flash)
 
 function submit() {
   form.post(route('inscription.message'), {
@@ -35,11 +34,6 @@ function submit() {
 
     <!-- Main Content -->
     <section class="max-w-7xl mx-auto px-4 md:px-10 lg:px-20 grid gap-20 items-start">
-
-      <!-- Flash Success Message -->
-      <div v-if="flash?.success" class="text-center text-primary font-bold">
-        {{ flash.success }}
-      </div>
 
       <!-- Form -->
       <form @submit.prevent="submit" class="space-y-8">
@@ -88,6 +82,19 @@ function submit() {
             class="w-full bg-transparent border-none focus:outline-none focus:ring-0 focus:shadow-none placeholder:text-white py-4 text-xl font-body leading-[30px] relative z-10"
           ></textarea>
           <div class="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-accent via-secondary to-primary z-0"></div>
+        </div>
+
+        <!-- Trial Checkbox -->
+        <div class="w-2/3 mx-auto flex items-center gap-3">
+        <input
+            type="checkbox"
+            v-model="form.course_trial"
+            id="course_trial"
+            class="h-5 w-5 text-primary border-gray-300 rounded"
+        />
+        <label for="course_trial" class="text-white text-lg">
+            Je souhaite m'inscrire à un cours d’essai gratuit
+        </label>
         </div>
 
         <!-- Submit Button -->
