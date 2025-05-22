@@ -170,6 +170,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':teacher'])
 
         Route::get('/my-profile', [TeamController::class, 'editOwn'])->name('teacher.team.edit');
         Route::put('/my-profile', [TeamController::class, 'updateOwn'])->name('teacher.team.update');
+        Route::post('/my-profile', [TeamController::class, 'storeOwn'])->name('teacher.team.store');
     });
 
 

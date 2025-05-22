@@ -39,61 +39,67 @@ const formatDate = (date) => {
 </script>
 
 <template>
-
   <div>
-    <h1 class="text-3xl font-bold text-primary mb-6">💬 My Chat Sessions</h1>
+    <h1 class="text-3xl font-bold text-primary mb-6">Mes sessions de chat</h1>
 
-    <!-- Show table if chats exist -->
-    <div v-if="hasChats" class="overflow-x-auto bg-[#1e1e1e] rounded-lg shadow">
-      <table class="min-w-full table-auto text-sm">
-        <thead class="bg-primary text-black uppercase text-xs">
+    <!-- Table -->
+    <div v-if="hasChats" class="overflow-x-auto">
+      <table class="min-w-full table-auto bg-background border border-primary rounded-lg text-sm mb-6">
+        <thead class="bg-[#1f1f1f] text-left text-white">
           <tr>
-            <th class="px-4 py-3 text-left">Chat ID</th>
-            <th class="px-4 py-3 text-left">Created At</th>
-            <th class="px-4 py-3 text-left">Messages</th>
-            <th class="px-4 py-3 text-left">Action</th>
+            <th class="px-4 py-2 border-b border-primary">Chat ID</th>
+            <th class="px-4 py-2 border-b border-primary">Créé le</th>
+            <th class="px-4 py-2 border-b border-primary">Messages</th>
+            <th class="px-4 py-2 border-b border-primary">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <!-- Loop user chat sessions -->
-          <template v-for="chat in chats" :key="chat.id">
-            <tr class="border-b border-gray-700 hover:bg-[#2a2a2a]">
-              <td class="px-4 py-3">{{ chat.id }}</td>
-              <td class="px-4 py-3">{{ formatDate(chat.created_at) }}</td>
-              <td class="px-4 py-3">{{ chat.messages?.length ?? 0 }}</td>
-              <td class="px-4 py-3 space-x-2">
-                <!-- View / Hide messages -->
+          <template v-for="(chat, index) in chats" :key="chat.id">
+            <tr
+              :class="[
+                'text-gray-100 hover:bg-[#2a2a2a]',
+                index === chats.length - 1 ? 'border-b border-primary' : 'border-b border-[#333]'
+              ]"
+            >
+              <td class="px-4 py-2">{{ chat.id }}</td>
+              <td class="px-4 py-2">{{ formatDate(chat.created_at) }}</td>
+              <td class="px-4 py-2">{{ chat.messages?.length ?? 0 }}</td>
+              <td class="px-4 py-2 space-x-2">
                 <button
                   @click="toggleMessages(chat.id)"
-                  class="text-primary hover:underline"
+                  class="px-3 py-1 text-sm font-bold bg-primary text-black rounded hover:bg-secondary"
                 >
-                  {{ expandedChatId === chat.id ? 'Hide' : 'View' }}
+                  {{ expandedChatId === chat.id ? 'Masquer' : 'Voir' }}
                 </button>
-
-                <!-- Delete chat -->
                 <button
                   @click="deleteChat(chat.id)"
-                  class="text-red-500 hover:underline"
+                  class="px-3 py-1 text-sm font-bold bg-accent text-white rounded hover:bg-red-500"
                 >
-                  Delete
+                  Supprimer
                 </button>
               </td>
             </tr>
 
-            <!-- Inline messages viewer -->
+            <!-- Messages -->
             <tr v-if="expandedChatId === chat.id">
               <td colspan="4" class="px-4 py-4 bg-[#2a2a2a]">
                 <div class="space-y-3">
-                  <div v-for="message in chat.messages" :key="message.id">
-                    <div :class="message.role === 'user' ? 'text-right' : ''">
-                      <div :class="message.role === 'user' ? 'bg-yellow-100 text-black' : 'bg-gray-100 text-black'"
-                        class="inline-block px-4 py-2 rounded-lg text-sm max-w-full break-words leading-relaxed">
-                        <p class="mb-1 text-xs text-gray-500">
-                          {{ message.role === 'user' ? 'You' : 'Assistant' }}
-                          • {{ formatDate(message.created_at) }}
-                        </p>
-                        <p>{{ message.content }}</p>
-                      </div>
+                  <div
+                    v-for="message in chat.messages"
+                    :key="message.id"
+                    :class="message.role === 'user' ? 'text-right' : 'text-left'"
+                  >
+                    <div
+                      :class="message.role === 'user'
+                        ? 'bg-yellow-100 text-black'
+                        : 'bg-gray-100 text-black'"
+                      class="inline-block px-4 py-2 rounded-lg text-sm max-w-full break-words leading-relaxed"
+                    >
+                      <p class="mb-1 text-xs text-gray-500">
+                        {{ message.role === 'user' ? 'Vous' : 'Assistant' }}
+                        • {{ formatDate(message.created_at) }}
+                      </p>
+                      <p>{{ message.content }}</p>
                     </div>
                   </div>
                 </div>
@@ -104,9 +110,10 @@ const formatDate = (date) => {
       </table>
     </div>
 
-    <!-- If no chats -->
-    <div v-else class="text-center text-gray-400 mt-10">
-      You don't have any chat sessions yet.
+    <!-- Empty -->
+    <div v-else class="text-center text-gray-400 mt-10 italic">
+      Vous n'avez encore aucune session de chat.
     </div>
   </div>
 </template>
+

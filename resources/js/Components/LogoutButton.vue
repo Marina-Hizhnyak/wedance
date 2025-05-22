@@ -1,4 +1,19 @@
 <script setup>
+import { Link } from '@inertiajs/vue3'
+</script>
+
+<template>
+  <Link
+    href="/logout"
+    method="post"
+    as="button"
+    class="md:px-2 lg:px-4 py-1.5 border border-primary text-white text-sm md:text-xs lg:text-sm rounded-full font-bold whitespace-nowrap hover:bg-primary hover:text-black transition inline-flex items-center gap-2"
+  >
+    Se déconnecter
+  </Link>
+</template>
+
+<!-- <script setup>
 import { router } from '@inertiajs/vue3'
 
 function logout() {
@@ -13,4 +28,4 @@ function logout() {
   >
  Se déconnecter
   </button>
-</template>
+</template> -->

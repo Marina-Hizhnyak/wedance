@@ -70,7 +70,7 @@ const handlePhotoChange = (event) => {
 
 <template>
   <div>
-    <h1 class="text-3xl font-bold text-primary mb-12">Welcome, {{ user.name }}</h1>
+    <h1 class="text-3xl font-bold text-primary mb-12">Bienvenue, {{ user.name }}</h1>
 
     <!-- User profile info -->
     <div class="flex items-center space-x-6 mb-6">
@@ -84,7 +84,7 @@ const handlePhotoChange = (event) => {
 
       <div>
         <p class="text-lg m-4"><strong>Email:</strong> {{ user.email }}</p>
-        <p class="text-lg m-4"><strong>Joined:</strong> {{ formatDate(user.created_at) }}</p>
+        <p class="text-lg m-4"><strong>Inscrit le:</strong> {{ formatDate(user.created_at) }}</p>
       </div>
     </div>
 
@@ -94,14 +94,14 @@ const handlePhotoChange = (event) => {
         @click="isEditing = true"
         class="px-5 py-2 bg-primary text-black font-bold rounded-full hover:bg-secondary transition mt-12"
       >
-        Edit Profile
+        Modifier le profil
       </button>
     </div>
 
     <!-- Edit form -->
     <div v-else class="space-y-4" enctype="multipart/form-data">
       <div>
-        <label class="block mb-1 text-sm">Name</label>
+        <label class="block mb-1 text-sm">Nom</label>
         <input v-model="form.name" type="text" class="w-[30%] px-4 py-2 rounded bg-background border" />
       </div>
 
@@ -111,7 +111,7 @@ const handlePhotoChange = (event) => {
       </div>
 
       <div>
-        <label class="block mb-1 text-sm">Profile Photo</label>
+        <label class="block mb-1 text-sm">Photo de profil</label>
         <input type="file" @change="handlePhotoChange" class="w-[30%] px-4 py-2 rounded bg-background border" />
         <img
           v-if="previewPhoto"
@@ -132,13 +132,13 @@ const handlePhotoChange = (event) => {
           @click="saveProfile"
           class="px-5 py-2 bg-primary text-black font-bold rounded-full hover:bg-secondary transition"
         >
-          Save
+          Enregistrer
         </button>
         <button
           @click="isEditing = false"
           class="px-5 py-2 bg-gray-600 text-white font-bold rounded-full hover:bg-gray-400 transition"
         >
-          Cancel
+          Annuler
         </button>
       </div>
     </div>

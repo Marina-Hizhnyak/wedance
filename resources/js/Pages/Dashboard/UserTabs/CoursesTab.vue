@@ -13,7 +13,7 @@ const hasCourses = computed(() => props.courses.length > 0)
 <template>
 
   <div>
-    <h1 class="text-3xl font-bold text-primary mb-4">🎓 My Courses</h1>
+    <h1 class="text-3xl font-bold text-primary mb-4">My Courses</h1>
 
     <!-- Courses grid -->
     <div v-if="hasCourses" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

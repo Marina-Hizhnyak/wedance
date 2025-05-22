@@ -1,80 +1,97 @@
 <template>
-<pre>{{  props }}</pre>
-  <div class="space-y-6">
-    <div class="flex justify-between items-center">
-      <h2 class="text-2xl font-bold text-primary">Mes témoignages</h2>
-      <button @click="showForm = true" class="bg-primary text-black px-4 py-2 rounded hover:bg-secondary">
+  <div>
+    <h2 class="text-3xl font-bold text-primary mb-4">Mes témoignages</h2>
+
+    <!-- Bouton -->
+    <div class="flex justify-end mb-4">
+      <button @click="openForm" class="px-4 py-2 bg-primary text-black font-bold rounded hover:bg-secondary">
         ➕ Ajouter un témoignage
       </button>
     </div>
 
     <!-- Liste des témoignages -->
-    <table v-if="testimonials.length" class="w-full text-left bg-gray-900 rounded">
-      <thead class="bg-gray-800 text-gray-300">
-        <tr>
-          <th class="p-3">Contenu</th>
-          <th class="p-3">Position</th>
-          <th class="p-3">Note</th>
-          <th class="p-3">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="t in testimonials" :key="t.id" class="border-t border-gray-700">
-          <td class="p-3">{{ t.content }}</td>
-          <td class="p-3">{{ t.position }}</td>
-          <td class="p-3">{{ t.rating }}/5</td>
-          <td class="p-3 space-x-2">
-            <button @click="editTestimonial(t)" class="text-blue-400 hover:underline">Modifier</button>
-            <button @click="destroy(t.id)" class="text-red-400 hover:underline">Supprimer</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="overflow-x-auto">
+      <table v-if="testimonials.length" class="min-w-full table-auto bg-background border border-primary rounded-lg mb-6">
+        <thead class="bg-[#1f1f1f] text-left text-white">
+          <tr>
+            <th class="px-4 py-2 border-b border-primary">Contenu</th>
+            <th class="px-4 py-2 border-b border-primary">Position</th>
+            <th class="px-4 py-2 border-b border-primary">Note</th>
+            <th class="px-4 py-2 border-b border-primary">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(t, index) in testimonials"
+            :key="t.id"
+            :class="[
+              'text-gray-100 hover:bg-[#2a2a2a]',
+              index === testimonials.length - 1 ? 'border-b border-primary' : 'border-b border-[#333]'
+            ]"
+          >
+            <td class="px-4 py-2">{{ t.content }}</td>
+            <td class="px-4 py-2">{{ t.position }}</td>
+            <td class="px-4 py-2">{{ t.rating }}/5</td>
+            <td class="px-4 py-2 space-x-2">
+              <button @click="editTestimonial(t)" class="px-3 py-1 text-sm font-bold bg-primary text-black rounded hover:bg-secondary">Modifier</button>
+              <button @click="destroy(t.id)" class="px-3 py-1 text-sm font-bold bg-accent text-white rounded hover:bg-red-500">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-    <!-- Formulaire d'ajout/modification -->
-    <form v-if="showForm" @submit.prevent="submit" class="bg-gray-800 p-6 rounded space-y-4">
-      <h3 class="text-xl font-semibold text-white">
+    <!-- Formulaire -->
+    <form
+      v-if="showForm"
+      ref="formSection"
+      @submit.prevent="submit"
+      class="scroll-mt-36 bg-[#1e1e1e] p-6 rounded-lg border border-primary max-w-xl"
+    >
+      <h3 class="text-xl font-bold text-primary mb-4">
         {{ form.id ? 'Modifier le témoignage' : 'Ajouter un témoignage' }}
       </h3>
 
-      <div>
-        <label class="block">Position</label>
-        <input v-model="form.position" class="w-full p-2 rounded bg-gray-700 text-white" type="text" />
+      <div class="mb-4">
+        <label class="block text-sm mb-1">Position</label>
+        <input v-model="form.position" type="text" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0 focus:border-primary" />
       </div>
 
-      <div>
-        <label class="block">Témoignage</label>
-        <textarea v-model="form.content" rows="4" class="w-full p-2 rounded bg-gray-700 text-white"></textarea>
+      <div class="mb-4">
+        <label class="block text-sm mb-1">Témoignage</label>
+        <textarea v-model="form.content" rows="4" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0 focus:border-primary"></textarea>
       </div>
 
-      <div>
-        <label class="block">Note</label>
-        <input v-model="form.rating" type="number" min="1" max="5" class="w-full p-2 rounded bg-gray-700 text-white" />
+      <div class="mb-4">
+        <label class="block text-sm mb-1">Note</label>
+        <input v-model="form.rating" type="number" min="1" max="5" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0 focus:border-primary" />
       </div>
 
-      <div>
-        <label class="block">Avatar</label>
-        <input type="file" @change="handleFile" class="text-white" />
+      <div class="mb-4">
+        <label class="block text-sm mb-1">Avatar</label>
+        <input type="file" @change="handleFile" class="w-full px-4 py-2 rounded bg-background border text-white focus:outline-none focus:ring-0 focus:border-primary" />
       </div>
 
-      <div class="flex space-x-4">
-        <button type="submit" class="bg-primary text-black px-4 py-2 rounded">
+      <div class="flex justify-end space-x-4">
+        <button type="submit" class="px-5 py-2 bg-primary text-black font-bold rounded hover:bg-secondary">
           {{ form.id ? 'Mettre à jour' : 'Envoyer' }}
         </button>
-        <button type="button" @click="cancel" class="text-white underline">Annuler</button>
+        <button type="button" @click="cancel" class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-400">Annuler</button>
       </div>
     </form>
   </div>
 </template>
 
+
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, nextTick } from 'vue'
 import { useForm, router, usePage } from '@inertiajs/vue3'
 
 const testimonials = computed(() => usePage().props.user.testimonials || [])
 
 const showForm = ref(false)
 const avatarFile = ref(null)
+const formSection = ref(null)
 
 const form = useForm({
   id: null,
@@ -86,6 +103,13 @@ const form = useForm({
 
 const handleFile = (e) => {
   avatarFile.value = e.target.files[0]
+}
+
+const openForm = () => {
+  showForm.value = true
+  nextTick(() => {
+    formSection.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  })
 }
 
 const submit = () => {
@@ -125,6 +149,9 @@ const editTestimonial = (t) => {
   form.position = t.position
   form.rating = t.rating
   showForm.value = true
+  nextTick(() => {
+    formSection.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  })
 }
 
 const reset = () => {
@@ -150,3 +177,4 @@ const reload = () => {
   router.reload({ only: ['user'] })
 }
 </script>
+

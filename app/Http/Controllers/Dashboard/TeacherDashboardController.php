@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class TeacherDashboardController extends Controller
 {
@@ -123,7 +124,7 @@ class TeacherDashboardController extends Controller
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('events', 'public');
         }
-
+        $data['slug'] = Str::slug($data['title']);
         Event::create($data);
 
         return back()->with('success', 'Événement ajouté avec succès.');
