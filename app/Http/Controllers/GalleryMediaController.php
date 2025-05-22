@@ -33,7 +33,7 @@ class GalleryMediaController extends Controller
 
         GalleryMedia::create($data);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Image ajoutée avec succès.');
     }
 
     public function destroy(GalleryMedia $media)
@@ -41,6 +41,6 @@ class GalleryMediaController extends Controller
         Storage::disk('public')->delete($media->image);
         $media->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Image supprimée avec succès.');
     }
 }

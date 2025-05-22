@@ -1,12 +1,12 @@
 <template>
   <div class="p-6">
-    <h1 class="text-2xl font-bold mb-4">Gallery Manager</h1>
+    <h2 class="text-3xl font-bold text-primary mb-4">Gallerie</h2>
 
     <!-- Upload Form -->
     <form @submit.prevent="submit" class="mb-6 space-y-4" enctype="multipart/form-data">
       <div>
         <label class="block mb-1 font-semibold">Image title (optional):</label>
-        <input v-model="form.title" type="text" class="w-full border rounded p-2" />
+        <input v-model="form.title" type="text" class="w-[50%] border rounded p-2 bg-gray-900 focus:outline-none focus:ring-0 focus:border-primary" />
       </div>
 
       <div>
@@ -19,22 +19,42 @@
       </div>
 
       <button type="submit" :disabled="form.processing"
-        class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+        class="bg-primary text-white px-4 py-2 rounded hover:bg-secondary">
         Upload
       </button>
     </form>
 
     <!-- Gallery List -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      <div v-for="item in media" :key="item.id" class="border rounded p-2 shadow relative">
-        <img :src="`/storage/${item.image}`" :alt="item.title" class="w-full h-48 object-cover rounded" />
-        <p class="mt-2 text-sm text-gray-700">{{ item.title || 'Untitled' }}</p>
-        <button @click="destroy(item.id)"
-          class="absolute top-1 right-1 bg-white hover:bg-red-100 text-red-600 border border-red-600 text-xs px-2 py-1 rounded">
-          Delete
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div
+        v-for="item in media"
+        :key="item.id"
+        class="bg-[#1e1e1e] border border-primary rounded-lg shadow overflow-hidden relative"
+    >
+        <!-- Image preview with fixed aspect ratio -->
+        <div class="aspect-video overflow-hidden">
+        <img
+            :src="`/storage/${item.image}`"
+            :alt="item.title"
+            class="w-full h-full object-cover"
+        />
+        </div>
+
+        <!-- Title -->
+        <p class="px-4 py-2 text-white text-sm truncate">
+        {{ item.title || 'Sans titre' }}
+        </p>
+
+        <!-- Delete button -->
+        <button
+        @click="destroy(item.id)"
+        class="absolute top-2 right-2 bg-white hover:bg-red-100 text-red-600 border border-red-600 text-xs px-2 py-1 rounded"
+        >
+        Supprimer
         </button>
-      </div>
     </div>
+    </div>
+
   </div>
 </template>
 
@@ -72,7 +92,6 @@ function submit() {
     onSuccess: () => {
       form.reset()
       form.imagePreview = null
-      // 🔁 Обновить только media после загрузки
       router.reload({ only: ['media'] })
     }
   })

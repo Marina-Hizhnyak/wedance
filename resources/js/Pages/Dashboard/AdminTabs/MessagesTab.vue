@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-3xl font-bold text-primary mb-4">📨 Messages</h1>
+    <h1 class="text-3xl font-bold text-primary mb-4">Messages</h1>
 
     <div v-if="messages.length" class="overflow-x-auto">
       <table class="min-w-full table-auto bg-background border border-primary rounded-lg mb-6">
@@ -15,16 +15,23 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="msg in messages" :key="msg.id" class="text-gray-100 hover:bg-[#2a2a2a]">
-            <td class="px-4 py-2 border-b border-[#333]">{{ msg.name }}</td>
-            <td class="px-4 py-2 border-b border-[#333]">{{ msg.email }}</td>
-            <td class="px-4 py-2 border-b border-[#333]">{{ msg.message }}</td>
-            <td class="px-4 py-2 border-b border-[#333]">{{ msg.course?.title ?? '–' }}</td>
-            <td class="px-4 py-2 border-b border-[#333]">
-            <span v-if="msg.course_trial" class="text-primary font-semibold">Oui</span>
-            <span v-else class="text-gray-400 italic">Non</span>
+          <tr
+            v-for="(msg, index) in messages"
+            :key="msg.id"
+            :class="[
+              'text-gray-100 hover:bg-[#2a2a2a]',
+              index === messages.length - 1 ? 'border-b border-primary' : 'border-b border-[#333]'
+            ]"
+          >
+            <td class="px-4 py-2">{{ msg.name }}</td>
+            <td class="px-4 py-2">{{ msg.email }}</td>
+            <td class="px-4 py-2">{{ msg.message }}</td>
+            <td class="px-4 py-2">{{ msg.course?.title ?? '–' }}</td>
+            <td class="px-4 py-2">
+              <span v-if="msg.course_trial" class="text-primary font-semibold">Oui</span>
+              <span v-else class="text-gray-400 italic">Non</span>
             </td>
-            <td class="px-4 py-2 border-b border-[#333]">{{ formatDate(msg.created_at) }}</td>
+            <td class="px-4 py-2">{{ formatDate(msg.created_at) }}</td>
           </tr>
         </tbody>
       </table>
@@ -33,6 +40,7 @@
     <div v-else class="text-gray-400 italic">Aucun message trouvé.</div>
   </div>
 </template>
+
 
 <script setup>
 import { defineProps } from 'vue'

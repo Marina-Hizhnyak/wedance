@@ -12,7 +12,7 @@ class BlogPostController extends Controller
 {
     public function index()
     {
-        $posts = BlogPost::latest()->with('author')->get();
+        $posts = BlogPost::oldest()->with('author')->get();
 
         return Inertia::render('Blog/Index', [
             'posts' => $posts,
@@ -48,7 +48,7 @@ class BlogPostController extends Controller
 
         BlogPost::create($data);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'L’article a été créé avec succès.');
     }
 
 
@@ -66,7 +66,7 @@ class BlogPostController extends Controller
 
         $post->update($data);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'L’article a été modifié avec succès.');
     }
 
 
@@ -74,6 +74,6 @@ class BlogPostController extends Controller
     {
         $post->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'L’article a été supprimé avec succès.');
     }
 }

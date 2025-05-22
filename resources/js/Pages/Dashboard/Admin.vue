@@ -1,22 +1,24 @@
 <script setup>
 import { ref, computed } from 'vue'
 import BaseLayout from '@/Layouts/BaseLayout.vue'
-import ProfileTab from './tabs/ProfileTab.vue'
-import UsersTab from './tabs/UsersTab.vue'
-import CoursesTab from './tabs/CoursesTab.vue'
-import EventsTab from './tabs/EventsTab.vue'
-import GalleryTab from './tabs/GalleryTab.vue'
-import BlogTab from './tabs/BlogTab.vue'
-import MessagesTab from './tabs/MessagesTab.vue'
-import ChatsTab from './tabs/ChatsTab.vue'
-import TeamMembersTab from './tabs/TeamMembersTab.vue'
-import TestimonialTab from './tabs/TestimonialsTab.vue'
+
+import ProfileTab from './AdminTabs/ProfileTab.vue'
+import UsersTab from './AdminTabs/UsersTab.vue'
+import CoursesTab from './AdminTabs/CoursesTab.vue'
+import EventsTab from './AdminTabs/EventsTab.vue'
+import GalleryTab from './AdminTabs/GalleryTab.vue'
+import BlogTab from './AdminTabs/BlogTab.vue'
+import MessagesTab from './AdminTabs/MessagesTab.vue'
+import ChatsTab from './AdminTabs/ChatsTab.vue'
+import TeamMembersTab from './AdminTabs/TeamMembersTab.vue'
+import TestimonialTab from './AdminTabs/TestimonialsTab.vue'
 
 import { usePage } from '@inertiajs/vue3'
 
 defineOptions({ layout: BaseLayout })
 
 const currentTab = ref('profile')
+const isSidebarOpen = ref(false)
 
 const props = defineProps({
   user: Object,
@@ -27,13 +29,16 @@ const props = defineProps({
   categories: Array,
   levels: Array,
   organizers: Array,
-   media: Array,
-    posts: Array,
-   messages: Array,
-    chats: Array,
-    teamMembers: Array,
-      testimonials: Array,
+  media: Array,
+  posts: Array,
+  messages: Array,
+  chats: Array,
+  teamMembers: Array,
+  testimonials: Array,
 })
+
+const user = usePage().props.user
+
 const currentTabComponent = computed(() => {
   return {
     profile: ProfileTab,
@@ -44,12 +49,10 @@ const currentTabComponent = computed(() => {
     blog: BlogTab,
     messages: MessagesTab,
     chats: ChatsTab,
-      teamMembers: TeamMembersTab,
-      testimonials: TestimonialTab,
+    teamMembers: TeamMembersTab,
+    testimonials: TestimonialTab,
   }[currentTab.value]
 })
-
-const user = usePage().props.user
 
 function tabBtn(tab) {
   return [
@@ -59,31 +62,49 @@ function tabBtn(tab) {
       : 'hover:bg-secondary text-white',
   ].join(' ')
 }
+
+function toggleSidebar() {
+  isSidebarOpen.value = !isSidebarOpen.value
+}
 </script>
 
-
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-[#1a0a05] to-background text-white font-inter flex">
+  <div class="min-h-screen bg-gradient-symmetric text-white font-inter flex flex-col md:flex-row">
+
+    <!-- Mobile Header -->
+    <div class="md:hidden p-4 bg-[#121212] flex justify-between items-center border-b border-[#333]">
+      <div class="text-xl font-title font-bold text-primary">Admin Panel</div>
+      <button @click="toggleSidebar" class="text-primary text-2xl focus:outline-none">☰</button>
+    </div>
+
     <!-- Sidebar -->
-    <aside class="w-64 min-h-screen bg-[#121212] p-6 space-y-6 sticky top-0">
-      <div class="text-2xl font-title font-bold text-primary">Admin Panel</div>
+    <aside
+      :class="[
+        'bg-[#121212] p-6 space-y-6 w-full md:w-64 md:static md:block',
+        isSidebarOpen ? 'block' : 'hidden',
+        'md:min-h-screen sticky top-0 z-20'
+      ]"
+    >
+      <div class="text-2xl font-title font-bold text-primary hidden md:block">Admin Panel</div>
       <nav class="space-y-2">
-        <button @click="currentTab = 'profile'" :class="tabBtn('profile')">👤 Profil</button>
-        <button @click="currentTab = 'users'" :class="tabBtn('users')">🧑 Utilisateurs</button>
-        <button @click="currentTab = 'courses'" :class="tabBtn('courses')">🎓 Cours</button>
-        <button @click="currentTab = 'events'" :class="tabBtn('events')">📅 Événements</button>
-        <button @click="currentTab = 'gallery'" :class="tabBtn('gallery')">🖼️ Galerie</button>
-        <button @click="currentTab = 'blog'" :class="tabBtn('blog')">📝 Blog</button>
-        <button @click="currentTab = 'messages'" :class="tabBtn('messages')">📨 Messages</button>
-        <button @click="currentTab = 'chats'" :class="tabBtn('chats')">💬 Chats</button>
-        <button @click="currentTab = 'teamMembers'" :class="tabBtn('teamMembers')">💬 TeamMembers Profiles</button>
-        <button @click="currentTab = 'testimonials'" :class="tabBtn('testimonials')">💬 Testimonials</button>
+        <button @click="currentTab = 'profile'; isSidebarOpen = false" :class="tabBtn('profile')">👤 Profil</button>
+        <button @click="currentTab = 'users'; isSidebarOpen = false" :class="tabBtn('users')">🧑 Utilisateurs</button>
+        <button @click="currentTab = 'courses'; isSidebarOpen = false" :class="tabBtn('courses')">🎓 Cours</button>
+        <button @click="currentTab = 'events'; isSidebarOpen = false" :class="tabBtn('events')">📅 Événements</button>
+        <button @click="currentTab = 'gallery'; isSidebarOpen = false" :class="tabBtn('gallery')">🖼️ Galerie</button>
+        <button @click="currentTab = 'blog'; isSidebarOpen = false" :class="tabBtn('blog')">📝 Blog</button>
+        <button @click="currentTab = 'messages'; isSidebarOpen = false" :class="tabBtn('messages')">📨 Messages</button>
+        <button @click="currentTab = 'chats'; isSidebarOpen = false" :class="tabBtn('chats')">💬 Chats</button>
+        <button @click="currentTab = 'teamMembers'; isSidebarOpen = false" :class="tabBtn('teamMembers')">👥 Profils équipe</button>
+        <button @click="currentTab = 'testimonials'; isSidebarOpen = false" :class="tabBtn('testimonials')">🌟 Témoignages</button>
       </nav>
     </aside>
 
     <!-- Main content -->
-    <main class="flex-1 p-10">
-      <component :is="currentTabComponent" :user="user"
+    <main class="flex-1 p-4 md:p-10 overflow-x-auto">
+      <component
+        :is="currentTabComponent"
+        :user="user"
         :users="users"
         :courses="courses"
         :events="events"
@@ -97,8 +118,7 @@ function tabBtn(tab) {
         :chats="chats"
         :teamMembers="teamMembers"
         :testimonials="testimonials"
-        />
+      />
     </main>
   </div>
 </template>
-

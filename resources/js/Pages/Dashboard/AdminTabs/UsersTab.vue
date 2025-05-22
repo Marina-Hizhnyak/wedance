@@ -47,31 +47,32 @@
     </div>
 
     <!-- Create User Form -->
-    <div
+    <form
       v-if="isCreating"
       ref="createFormSection"
+      @submit.prevent="storeUser"
       class="scroll-mt-36 bg-[#1e1e1e] p-6 rounded-lg border border-primary max-w-xl mb-10"
     >
       <h2 class="text-xl font-bold mb-4 text-primary">Ajouter un utilisateur</h2>
 
       <div class="mb-4">
         <label class="block text-sm mb-1">Nom</label>
-        <input v-model="createForm.name" type="text" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0" />
+        <input v-model="createForm.name" type="text" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0 focus:border-primary" />
       </div>
 
       <div class="mb-4">
         <label class="block text-sm mb-1">Email</label>
-        <input v-model="createForm.email" type="email" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0" />
+        <input v-model="createForm.email" type="email" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0 focus:border-primary" />
       </div>
 
       <div class="mb-4">
         <label class="block text-sm mb-1">Mot de passe</label>
-        <input v-model="createForm.password" type="password" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0" />
+        <input v-model="createForm.password" type="password" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0 focus:border-primary" />
       </div>
 
       <div class="mb-4">
         <label class="block text-sm mb-1">Rôle</label>
-        <select v-model="createForm.role" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0">
+        <select v-model="createForm.role" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0 focus:border-primary">
           <option value="user">Utilisateur</option>
           <option value="teacher">Enseignant</option>
           <option value="admin">Administrateur</option>
@@ -79,10 +80,10 @@
       </div>
 
       <div class="flex justify-end space-x-4">
-        <button @click="cancelCreate" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-400">Annuler</button>
-        <button @click="storeUser" class="px-4 py-2 bg-primary text-black font-bold rounded hover:bg-secondary">Créer</button>
+        <button type="button" @click="cancelCreate" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-400">Annuler</button>
+        <button type="submit" class="px-4 py-2 bg-primary text-black font-bold rounded hover:bg-secondary">Créer</button>
       </div>
-    </div>
+    </form>
 
     <!-- Edit User Form -->
     <div
@@ -147,7 +148,6 @@ const editForm = ref({
   role: 'user',
 })
 
-// Open forms and scroll
 const openCreateForm = () => {
   isCreating.value = true
   nextTick(() => {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class EventController extends Controller
 {
@@ -36,6 +37,8 @@ class EventController extends Controller
             'organizer_id' => 'nullable|exists:users,id',
         ]);
 
+
+        $data['slug'] = Str::slug($data['title']);
         Event::create($data);
 
         return redirect()->back()->with('success', 'Événement créé avec succès');

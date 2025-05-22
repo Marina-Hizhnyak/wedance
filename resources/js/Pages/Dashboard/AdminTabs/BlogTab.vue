@@ -6,7 +6,7 @@
     <div class="flex justify-end mb-4">
       <button
         @click="startCreating"
-        class="px-4 py-2 bg-primary text-background font-bold rounded hover:bg-green-500"
+        class="px-4 py-2 bg-primary text-background font-bold rounded hover:bg-secondary"
       >
         ➕ Add a post
       </button>
@@ -26,17 +26,20 @@
         </thead>
         <tbody>
           <tr
-            v-for="post in posts"
+            v-for="(post, index) in posts"
             :key="post.id"
-            class="hover:bg-[#2a2a2a] text-gray-100"
+            :class="[
+              'hover:bg-[#2a2a2a] text-gray-100',
+              index === posts.length - 1 ? 'border-b border-primary' : 'border-b border-[#333]'
+            ]"
           >
-            <td class="px-4 py-2 border-b border-[#333]">
+            <td class="px-4 py-2">
               <img v-if="post.image" :src="`/storage/${post.image}`" class="w-20 h-14 object-cover rounded" />
             </td>
-            <td class="px-4 py-2 border-b border-[#333]">{{ post.title }}</td>
-            <td class="px-4 py-2 border-b border-[#333]">{{ post.author?.name }}</td>
-            <td class="px-4 py-2 border-b border-[#333]">{{ formatDate(post.created_at) }}</td>
-            <td class="px-4 py-2 border-b border-[#333] space-x-2">
+            <td class="px-4 py-2">{{ post.title }}</td>
+            <td class="px-4 py-2">{{ post.author?.name }}</td>
+            <td class="px-4 py-2">{{ formatDate(post.created_at) }}</td>
+            <td class="px-4 py-2 space-x-2">
               <button @click="edit(post)" class="px-3 py-1 text-sm font-bold bg-yellow-500 text-black rounded hover:bg-yellow-400">Edit</button>
               <button @click="destroy(post.id)" class="px-3 py-1 text-sm font-bold bg-red-600 text-white rounded hover:bg-red-500">Delete</button>
             </td>
@@ -46,26 +49,22 @@
     </div>
 
     <!-- Create/Edit Post Form -->
-    <div v-if="showForm" class="bg-[#1e1e1e] p-6 rounded-lg border border-primary max-w-xl mb-10">
+    <div v-if="showForm" ref="blogFormSection" class="scroll-mt-36 bg-[#1e1e1e] p-6 rounded-lg border border-primary max-w-xl mb-10">
       <h2 class="text-xl font-bold mb-4 text-primary">{{ editingPost ? 'Edit post' : 'Add new post' }}</h2>
 
       <div class="mb-4">
         <label class="block text-sm mb-1">Title</label>
-        <input v-model="form.title" type="text" class="w-full px-4 py-2 rounded bg-background border" />
+        <input v-model="form.title" type="text" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0 focus:border-primary" />
       </div>
 
       <div class="mb-4">
         <label class="block text-sm mb-1">Content</label>
-        <!-- <textarea v-model="form.content" rows="5" class="w-full px-4 py-2 rounded bg-background border"></textarea> -->
-         <div class="mb-4">
-  <label class="block text-sm mb-1">Content</label>
-  <RichTextEditor v-model="form.content" />
-</div>
+        <RichTextEditor v-model="form.content" />
       </div>
 
       <div class="mb-4">
         <label class="block text-sm mb-1">Image (optional)</label>
-        <input type="file" @change="handleFileChange" class="w-full px-4 py-2 rounded bg-background border text-white" />
+        <input type="file" @change="handleFileChange" class="w-full px-4 py-2 rounded bg-background border text-white focus:outline-none focus:ring-0 focus:border-primary" />
         <div v-if="form.imagePreview" class="mt-2">
           <img :src="form.imagePreview" alt="Preview" class="h-24 object-cover rounded" />
         </div>
@@ -81,10 +80,10 @@
   </div>
 </template>
 
+
 <script setup>
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 import { useForm, router } from '@inertiajs/vue3'
-import { defineProps } from 'vue'
 import RichTextEditor from '@/Components/RichTextEditor.vue'
 
 const props = defineProps({
@@ -93,6 +92,7 @@ const props = defineProps({
 
 const showForm = ref(false)
 const editingPost = ref(null)
+const blogFormSection = ref(null)
 
 const form = useForm({
   title: '',
@@ -106,6 +106,9 @@ function startCreating() {
   editingPost.value = null
   form.reset()
   form.imagePreview = null
+  nextTick(() => {
+    blogFormSection.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  })
 }
 
 function edit(post) {
@@ -115,6 +118,9 @@ function edit(post) {
   form.content = post.content
   form.image = null
   form.imagePreview = post.image ? `/storage/${post.image}` : null
+  nextTick(() => {
+    blogFormSection.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  })
 }
 
 function cancel() {
@@ -136,11 +142,13 @@ function submit() {
   const payload = new FormData()
   payload.append('title', form.title)
   payload.append('content', form.content)
-  if (form.image) payload.append('image', form.image)
+  if (form.image) {
+    payload.append('image', form.image)
+  }
 
   if (editingPost.value) {
+    payload.append('_method', 'PUT')
     router.post(route('admin.blog.update', editingPost.value.id), payload, {
-      method: 'post',
       forceFormData: true,
       onSuccess: () => {
         cancel()
@@ -158,6 +166,7 @@ function submit() {
   }
 }
 
+
 function destroy(id) {
   if (confirm('Are you sure you want to delete this post?')) {
     router.delete(route('admin.blog.destroy', id), {
@@ -170,4 +179,5 @@ function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString()
 }
 </script>
+
 

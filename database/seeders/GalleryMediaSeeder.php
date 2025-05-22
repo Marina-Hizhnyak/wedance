@@ -16,7 +16,7 @@ class GalleryMediaSeeder extends Seeder
         for ($i = 1; $i <= 12; $i++) {
             GalleryMedia::create([
                 'title' => "Photo $i",
-                'image' => "$i.jpg",
+                'image' => "/images/gallery/$i.jpg",
                 'event_id' => null,
             ]);
         }

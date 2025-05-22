@@ -35,7 +35,7 @@ class AdminDashboardController extends Controller
             'events' => Event::with('organizer')->get(),
             'organizers' => User::select('id', 'name')->get(),
             'media' => GalleryMedia::latest()->get(),
-            'posts' => BlogPost::with('author')->latest()->get(),
+            'posts' => BlogPost::with('author')->oldest()->get(),
             'messages' => Message::with('course')->latest()->get(),
             'chats' => $chats,
             'teamMembers' => TeamMember::with('user')->get(),
