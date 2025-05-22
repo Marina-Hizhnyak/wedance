@@ -12,7 +12,7 @@ defineOptions({ layout: BaseLayout })
         <div class="min-h-screen flex flex-col items-center justify-center pt-12">
 
             <!-- Main content block -->
-            <div class="w-full max-w-4xl bg-background shadow-xl rounded-xl px-6 sm:px-10 py-8 text-text prose text-gray-800 prose-headings:text-primary prose-a:text-secondary prose-h1:font-bold prose-h2:mt-4 prose-h2:font-semibold prose-p:mt-2 prose-p:leading-relaxed">
+            <div class="w-full max-w-6xl bg-background shadow-xl rounded-xl px-6 sm:px-10 py-8 text-text prose text-gray-800 prose-headings:text-primary prose-a:text-secondary prose-h1:font-bold prose-h2:mt-4 prose-h2:font-semibold prose-p:mt-2 prose-p:leading-relaxed">
                 <h1>Gestion des cookies</h1>
 
                 <p>Cette politique de gestion des cookies vous informe sur l’utilisation des cookies sur le site de Wedance.</p>
