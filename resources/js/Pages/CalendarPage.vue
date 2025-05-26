@@ -5,6 +5,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import { defineProps } from 'vue'
 import BaseLayout from '@/Layouts/BaseLayout.vue'
 import { router, usePage } from '@inertiajs/vue3'
+import frLocale from '@fullcalendar/core/locales/fr'
 
 defineOptions({ layout: BaseLayout })
 
@@ -16,6 +17,8 @@ const calendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin],
     initialView: 'dayGridMonth',
     events: props.events,
+    locale: 'fr',
+    locales: [frLocale],
     eventColor: '#06b6d4',
     headerToolbar: {
         start: 'prev,next today',
@@ -36,7 +39,7 @@ eventClick(info) {
 
 <template>
     <div class="max-w-6xl mx-auto py-10 text-white">
-        <h1 class="text-3xl font-bold text-primary mb-6">Calendrier des cours et événements</h1>
+        <h1 class="text-3xl font-bold text-primary mb-6 text-center">Calendrier des cours et événements</h1>
         <FullCalendar :options="calendarOptions" />
     </div>
 </template>

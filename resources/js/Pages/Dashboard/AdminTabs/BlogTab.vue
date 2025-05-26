@@ -8,7 +8,7 @@
         @click="startCreating"
         class="px-4 py-2 bg-primary text-background font-bold rounded hover:bg-secondary"
       >
-        ➕ Add a post
+        ➕ Ajouter un article
       </button>
     </div>
 
@@ -18,8 +18,8 @@
         <thead class="bg-[#1f1f1f] text-left text-white">
           <tr>
             <th class="px-4 py-2 border-b border-primary">Image</th>
-            <th class="px-4 py-2 border-b border-primary">Title</th>
-            <th class="px-4 py-2 border-b border-primary">Author</th>
+            <th class="px-4 py-2 border-b border-primary">Titre</th>
+            <th class="px-4 py-2 border-b border-primary">Auteur</th>
             <th class="px-4 py-2 border-b border-primary">Date</th>
             <th class="px-4 py-2 border-b border-primary">Actions</th>
           </tr>
@@ -40,8 +40,8 @@
             <td class="px-4 py-2">{{ post.author?.name }}</td>
             <td class="px-4 py-2">{{ formatDate(post.created_at) }}</td>
             <td class="px-4 py-2 space-x-2">
-              <button @click="edit(post)" class="px-3 py-1 text-sm font-bold bg-yellow-500 text-black rounded hover:bg-yellow-400">Edit</button>
-              <button @click="destroy(post.id)" class="px-3 py-1 text-sm font-bold bg-red-600 text-white rounded hover:bg-red-500">Delete</button>
+              <button @click="edit(post)" class="px-3 py-1 text-sm font-bold bg-yellow-500 text-black rounded hover:bg-yellow-400">Modifier</button>
+              <button @click="destroy(post.id)" class="px-3 py-1 text-sm font-bold bg-red-600 text-white rounded hover:bg-red-500">Supprimer</button>
             </td>
           </tr>
         </tbody>
@@ -50,20 +50,21 @@
 
     <!-- Create/Edit Post Form -->
     <div v-if="showForm" ref="blogFormSection" class="scroll-mt-36 bg-[#1e1e1e] p-6 rounded-lg border border-primary max-w-xl mb-10">
-      <h2 class="text-xl font-bold mb-4 text-primary">{{ editingPost ? 'Edit post' : 'Add new post' }}</h2>
+      <h2 class="text-xl font-bold mb-4 text-primary">{{ editingPost ? 'Modifier l’article' : 'Ajouter un nouvel article' }}
+</h2>
 
       <div class="mb-4">
-        <label class="block text-sm mb-1">Title</label>
+        <label class="block text-sm mb-1">Titre</label>
         <input v-model="form.title" type="text" class="w-full px-4 py-2 rounded bg-background border focus:outline-none focus:ring-0 focus:border-primary" />
       </div>
 
       <div class="mb-4">
-        <label class="block text-sm mb-1">Content</label>
+        <label class="block text-sm mb-1">Contenu</label>
         <RichTextEditor v-model="form.content" />
       </div>
 
       <div class="mb-4">
-        <label class="block text-sm mb-1">Image (optional)</label>
+        <label class="block text-sm mb-1">Image (optionnelle)</label>
         <input type="file" @change="handleFileChange" class="w-full px-4 py-2 rounded bg-background border text-white focus:outline-none focus:ring-0 focus:border-primary" />
         <div v-if="form.imagePreview" class="mt-2">
           <img :src="form.imagePreview" alt="Preview" class="h-24 object-cover rounded" />
@@ -71,9 +72,9 @@
       </div>
 
       <div class="flex justify-end space-x-4">
-        <button @click="cancel" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-400">Cancel</button>
+        <button @click="cancel" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-400">Annuler</button>
         <button @click="submit" class="px-4 py-2 bg-primary text-black font-bold rounded hover:bg-secondary">
-          {{ editingPost ? 'Update' : 'Create' }}
+          {{ editingPost ? 'Mettre à jour' : 'Créer' }}
         </button>
       </div>
     </div>

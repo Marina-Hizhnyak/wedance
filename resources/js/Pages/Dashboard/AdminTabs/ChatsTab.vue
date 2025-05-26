@@ -23,7 +23,7 @@ function deleteChat(chatId) {
 <template>
   <div>
     <!-- Title -->
-    <h1 class="text-3xl font-bold text-primary mb-4">Chat Sessions</h1>
+    <h1 class="text-3xl font-bold text-primary mb-4">Sessions de chat</h1>
 
     <!-- Table of chat sessions -->
     <div class="overflow-x-auto">
@@ -31,9 +31,9 @@ function deleteChat(chatId) {
         <thead class="bg-[#1f1f1f] text-white text-left">
           <tr>
             <th class="px-4 py-2 border-b border-primary">ID</th>
-            <th class="px-4 py-2 border-b border-primary">User</th>
-            <th class="px-4 py-2 border-b border-primary">User ID</th>
-            <th class="px-4 py-2 border-b border-primary">Created At</th>
+            <th class="px-4 py-2 border-b border-primary">Utilisateur</th>
+            <th class="px-4 py-2 border-b border-primary">ID utilisateur</th>
+            <th class="px-4 py-2 border-b border-primary">Créé le</th>
             <th class="px-4 py-2 border-b border-primary">Actions</th>
           </tr>
         </thead>
@@ -47,8 +47,8 @@ function deleteChat(chatId) {
               ]"
             >
               <td class="px-4 py-2">{{ chat.id }}</td>
-              <td class="px-4 py-2">{{ chat.user?.name ?? 'Guest' }}</td>
-              <td class="px-4 py-2">{{ chat.user_id ?? 'Anonymous' }}</td>
+              <td class="px-4 py-2">{{ chat.user?.name ?? 'Invité' }}</td>
+              <td class="px-4 py-2">{{ chat.user_id ?? 'Anonyme' }}</td>
               <td class="px-4 py-2">{{ new Date(chat.created_at).toLocaleString() }}</td>
               <td class="px-4 py-2 space-x-2">
                 <button
@@ -79,7 +79,7 @@ function deleteChat(chatId) {
                         class="inline-block px-4 py-2 rounded-lg text-sm max-w-full break-words leading-relaxed"
                       >
                         <p class="mb-1 text-xs text-gray-500">
-                          {{ message.role === 'user' ? 'User' : 'Assistant' }} •
+                          {{ message.role === 'user' ? 'Utilisateur' : 'Assistant' }} •
                           {{ new Date(message.created_at).toLocaleString() }}
                         </p>
                         <p>{{ message.content }}</p>
@@ -94,7 +94,7 @@ function deleteChat(chatId) {
           <!-- No chats -->
           <tr v-if="chats.length === 0">
             <td colspan="5" class="text-center px-4 py-6 text-gray-400 italic">
-              No chat sessions found.
+              Aucune session de chat trouvée.
             </td>
           </tr>
         </tbody>

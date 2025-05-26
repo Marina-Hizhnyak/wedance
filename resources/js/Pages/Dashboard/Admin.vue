@@ -85,7 +85,7 @@ function toggleSidebar() {
         'md:min-h-screen sticky top-0 z-20'
       ]"
     >
-      <div class="text-2xl font-title font-bold text-primary hidden md:block">Admin Panel</div>
+      <div class="text-2xl font-title font-bold text-primary hidden md:block">Panneau d’administration</div>
       <nav class="space-y-2">
         <button @click="currentTab = 'profile'; isSidebarOpen = false" :class="tabBtn('profile')">👤 Profil</button>
         <button @click="currentTab = 'users'; isSidebarOpen = false" :class="tabBtn('users')">🧑 Utilisateurs</button>

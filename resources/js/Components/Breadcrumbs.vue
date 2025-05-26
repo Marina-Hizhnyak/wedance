@@ -34,7 +34,7 @@ const pathTranslations = {
   'about': 'À propos',
   'mon-espace': 'Mon espace',
   'inscription': 'Inscription',
-  // Ajoute d'autres ici si nécessaire
+  'dashboard': 'Tableau de bord',
 }
 </script>
 

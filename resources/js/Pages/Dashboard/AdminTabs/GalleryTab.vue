@@ -1,16 +1,16 @@
 <template>
   <div class="p-6">
-    <h2 class="text-3xl font-bold text-primary mb-4">Gallerie</h2>
+    <h2 class="text-3xl font-bold text-primary mb-4">Galerie</h2>
 
     <!-- Upload Form -->
     <form @submit.prevent="submit" class="mb-6 space-y-4" enctype="multipart/form-data">
       <div>
-        <label class="block mb-1 font-semibold">Image title (optional):</label>
+        <label class="block mb-1 font-semibold">Titre de l’image (optionnel):</label>
         <input v-model="form.title" type="text" class="w-[50%] border rounded p-2 bg-gray-900 focus:outline-none focus:ring-0 focus:border-primary" />
       </div>
 
       <div>
-        <label class="block mb-1 font-semibold">Choose image:</label>
+        <label class="block mb-1 font-semibold">Choisir une image:</label>
         <input type="file" @change="handleFileChange" accept="image/*" class="block" />
       </div>
 
@@ -20,7 +20,7 @@
 
       <button type="submit" :disabled="form.processing"
         class="bg-primary text-white px-4 py-2 rounded hover:bg-secondary">
-        Upload
+        Télécharger
       </button>
     </form>
 

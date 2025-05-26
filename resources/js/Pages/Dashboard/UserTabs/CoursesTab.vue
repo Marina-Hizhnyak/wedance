@@ -13,7 +13,7 @@ const hasCourses = computed(() => props.courses.length > 0)
 <template>
 
   <div>
-    <h1 class="text-3xl font-bold text-primary mb-4">My Courses</h1>
+    <h1 class="text-3xl font-bold text-primary mb-4">Mes cours</h1>
 
     <!-- Courses grid -->
     <div v-if="hasCourses" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -37,10 +37,10 @@ const hasCourses = computed(() => props.courses.length > 0)
 
           <!-- Extra course details -->
           <div class="mt-4 flex flex-col gap-1 text-sm text-gray-500">
-            <span><strong>Duration:</strong> {{ course.duration }}</span>
-            <span><strong>Day:</strong> {{ course.day_time }}</span>
-            <span><strong>Price:</strong> {{ course.price }} €</span>
-            <span v-if="course.level"><strong>Level:</strong> {{ course.level.name }}</span>
+            <span><strong>Durée:</strong> {{ course.duration }}</span>
+            <span><strong>Jour:</strong> {{ course.day_time }}</span>
+            <span><strong>Priх:</strong> {{ course.price }} €</span>
+            <span v-if="course.level"><strong>Niveau:</strong> {{ course.level.name }}</span>
           </div>
         </div>
       </div>
@@ -48,7 +48,7 @@ const hasCourses = computed(() => props.courses.length > 0)
 
     <!-- If no courses found -->
     <div v-else class="text-center text-gray-400 mt-10">
-      You are not enrolled in any courses yet.
+      Vous n’avez encore suivi aucun cours.
     </div>
   </div>
 </template>

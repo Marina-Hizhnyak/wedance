@@ -34,12 +34,12 @@ const props = defineProps({
         <p class="text-lg text-gray-300 mb-6">{{ event.description }}</p>
 
         <!-- Call-to-action button -->
-        <a
+        <!-- <a
           href="/inscription"
           class="inline-block bg-primary text-black font-bold px-8 py-3 rounded-full shadow-md hover:scale-105 hover:bg-secondary transition"
         >
           S’inscrire maintenant
-        </a>
+        </a> -->
       </div>
     </section>
   </div>

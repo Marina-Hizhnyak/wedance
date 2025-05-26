@@ -23,7 +23,7 @@ const formatDate = (date) => {
 
 <template>
   <div>
-    <h1 class="text-3xl font-bold text-primary mb-4">My Favorites</h1>
+    <h1 class="text-3xl font-bold text-primary mb-4">Mes favoris</h1>
 
     <!-- Favorites grid -->
     <div v-if="hasFavorites" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -44,7 +44,7 @@ const formatDate = (date) => {
         <div class="p-5">
           <!-- Title -->
           <h2 class="text-xl font-semibold text-white mb-2">
-            {{ favorite.likeable?.title ?? 'Unknown Item' }}
+            {{ favorite.likeable?.title ?? 'Élément inconnu' }}
           </h2>
 
           <!-- Content (use v-html for BlogPost content) -->
@@ -52,7 +52,7 @@ const formatDate = (date) => {
 
           <!-- Description fallback -->
           <p v-else class="text-gray-600 text-sm">
-            {{ favorite.likeable?.description ?? 'No description available.' }}
+            {{ favorite.likeable?.description ?? 'Aucune description disponible.' }}
           </p>
 
           <!-- Type badge + optional price -->
@@ -61,16 +61,16 @@ const formatDate = (date) => {
               class="inline-flex items-center bg-primary text-black font-bold text-xs uppercase px-2 py-1 rounded"
             >
               <template v-if="favorite.likeable_type?.includes('Course')">
-                🎓 Course
+                🎓 Cours
               </template>
               <template v-else-if="favorite.likeable_type?.includes('BlogPost')">
-                📝 Blog Post
+                📝 Article de blog
               </template>
               <template v-else-if="favorite.likeable_type?.includes('Event')">
-                📅 Event
+                📅 Événement
               </template>
               <template v-else>
-                ❓ Unknown
+                ❓ Inconnu
               </template>
             </span>
 
@@ -85,17 +85,17 @@ const formatDate = (date) => {
             v-if="favorite.likeable_type?.includes('Event') && favorite.likeable?.date"
             class="text-xs text-gray-400 mt-2"
           >
-            Event date: {{ formatDate(favorite.likeable.date) }}
+            Date de l’événement  {{ formatDate(favorite.likeable.date) }}
           </p>
 
           <!-- Liked at date -->
           <p class="text-xs text-gray-400 mt-2">
-            You liked this
-            <template v-if="favorite.likeable_type?.includes('Course')">Course</template>
-            <template v-else-if="favorite.likeable_type?.includes('BlogPost')">Blog Post</template>
-            <template v-else-if="favorite.likeable_type?.includes('Event')">Event</template>
-            <template v-else>Item</template>
-            on {{ formatDate(favorite.created_at) }}
+            Vous avez ajouté ce
+            <template v-if="favorite.likeable_type?.includes('Course')">cours</template>
+            <template v-else-if="favorite.likeable_type?.includes('BlogPost')">article</template>
+            <template v-else-if="favorite.likeable_type?.includes('Event')">événement</template>
+            <template v-else>élément</template>
+            le {{ formatDate(favorite.created_at) }}
           </p>
 
           <!-- Link to BlogPost if it's a BlogPost -->
@@ -104,7 +104,7 @@ const formatDate = (date) => {
             :href="`/blog/${favorite.likeable.slug}`"
             class="inline-block mt-3 text-primary hover:underline"
           >
-            🔗 View Post
+            🔗 Voir l’article
           </Link>
         </div>
       </div>
@@ -112,7 +112,7 @@ const formatDate = (date) => {
 
     <!-- No favorites -->
     <div v-else class="text-center text-gray-400 mt-10">
-      You haven't liked anything yet.
+     Vous n’avez encore rien ajouté à vos favoris.
     </div>
   </div>
 </template>
