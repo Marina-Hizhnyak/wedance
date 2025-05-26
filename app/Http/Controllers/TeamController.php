@@ -44,7 +44,7 @@ class TeamController extends Controller
             if ($profile->photo && Storage::disk('public')->exists($profile->photo)) {
                 Storage::disk('public')->delete($profile->photo);
             }
-            $validated['photo'] = $request->file('photo')->store('team_photos', 'public');
+            $validated['photo'] = $request->file('photo')->store('images/team_photos', 'public');
         }
 
 
@@ -52,7 +52,7 @@ class TeamController extends Controller
             if ($profile->avatar && Storage::disk('public')->exists($profile->avatar)) {
                 Storage::disk('public')->delete($profile->avatar);
             }
-            $validated['avatar'] = $request->file('avatar')->store('team_avatars', 'public');
+            $validated['avatar'] = $request->file('avatar')->store('images/team_avatars', 'public');
         }
 
         $profile->update($validated);
@@ -96,11 +96,11 @@ class TeamController extends Controller
         ]);
 
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('photos', 'public');
+            $data['photo'] = $request->file('photo')->store('images/photos', 'public');
         }
 
         if ($request->hasFile('avatar')) {
-            $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
+            $data['avatar'] = $request->file('avatar')->store('images/avatars', 'public');
         }
 
         TeamMember::create($data);
@@ -133,11 +133,11 @@ class TeamController extends Controller
 
         // ✅ Gérer les fichiers uploadés
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('team_photos', 'public');
+            $data['photo'] = $request->file('photo')->store('images/photos', 'public');
         }
 
         if ($request->hasFile('avatar')) {
-            $data['avatar'] = $request->file('avatar')->store('team_avatars', 'public');
+            $data['avatar'] = $request->file('avatar')->store('images/avatars', 'public');
         }
 
         TeamMember::create($data);

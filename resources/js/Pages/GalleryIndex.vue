@@ -11,7 +11,7 @@
       >
         <!-- Image -->
         <img loading="lazy"
-          :src="`/images/gallery/${item.image}`"
+          :src="`${item.image}`"
           :alt="item.title"
           class="w-full h-72 object-cover transform group-hover:scale-105 transition duration-500"
         />

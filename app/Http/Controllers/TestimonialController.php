@@ -19,7 +19,7 @@ class TestimonialController extends Controller
 
         $path = null;
         if ($request->hasFile('avatar')) {
-            $path = $request->file('avatar')->store('avatars', 'public');
+            $path = $request->file('avatar')->store('images/avatars', 'public');
         }
 
         Testimonial::create([
@@ -45,7 +45,7 @@ class TestimonialController extends Controller
         ]);
 
         if ($request->hasFile('avatar')) {
-            $path = $request->file('avatar')->store('avatars', 'public');
+            $path = $request->file('avatar')->store('images/avatars', 'public');
             $testimonial->avatar = $path;
         }
 

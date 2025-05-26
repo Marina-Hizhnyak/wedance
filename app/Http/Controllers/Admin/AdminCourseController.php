@@ -26,7 +26,7 @@ class AdminCourseController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('courses', 'public');
+            $data['image'] = $request->file('image')->store('images/courses', 'public');
         }
 
         $course = Course::create($data);
@@ -56,7 +56,7 @@ class AdminCourseController extends Controller
             if ($course->image) {
                 Storage::disk('public')->delete($course->image);
             }
-            $data['image'] = $request->file('image')->store('courses', 'public');
+            $data['image'] = $request->file('image')->store('images/courses', 'public');
         }
 
         $course->update($data);

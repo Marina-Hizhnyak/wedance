@@ -22,12 +22,13 @@ const calendarOptions = {
         center: 'title',
         end: 'dayGridMonth,dayGridWeek'
     },
-    eventClick(info) {
-        if (info.event.url) {
-            window.open(info.event.url, '_blank')
-            info.jsEvent.preventDefault()
-        }
-    },
+eventClick(info) {
+    if (info.event.url) {
+        window.location.href = info.event.url
+        info.jsEvent.preventDefault()
+    }
+},
+
 
 
 }

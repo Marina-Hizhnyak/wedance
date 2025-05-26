@@ -32,9 +32,9 @@
             <td class="px-4 py-2">{{ t.content }}</td>
             <td class="px-4 py-2">{{ t.position }}</td>
             <td class="px-4 py-2">{{ t.rating }}/5</td>
-            <td class="px-4 py-2 space-x-2">
-              <button @click="editTestimonial(t)" class="px-3 py-1 text-sm font-bold bg-primary text-black rounded hover:bg-secondary">Modifier</button>
-              <button @click="destroy(t.id)" class="px-3 py-1 text-sm font-bold bg-accent text-white rounded hover:bg-red-500">Supprimer</button>
+            <td class="px-2 py-2 space-x-2">
+              <button @click="editTestimonial(t)" class="px-2 py-1 text-sm font-bold bg-primary text-black rounded hover:bg-secondary">Modifier</button>
+              <button @click="destroy(t.id)" class="px-2 py-1 text-sm font-bold bg-accent text-white rounded hover:bg-red-500">Supprimer</button>
             </td>
           </tr>
         </tbody>

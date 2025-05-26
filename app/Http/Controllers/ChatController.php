@@ -43,7 +43,7 @@ class ChatController extends Controller
 
             return response()->json(['reply' => $assistantReply]);
         } catch (\Exception $e) {
-            logger()->error('Ошибка в ChatController@sendMessage', [
+            logger()->error('Erreur ChatController@sendMessage', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);

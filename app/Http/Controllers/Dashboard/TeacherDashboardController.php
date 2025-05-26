@@ -50,7 +50,7 @@ class TeacherDashboardController extends Controller
 
         // ✅ Save image if uploaded
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('courses', 'public');
+            $data['image'] = $request->file('image')->store('images/courses', 'public');
         }
 
         Course::create($data);
@@ -82,7 +82,7 @@ class TeacherDashboardController extends Controller
             if ($course->image) {
                 Storage::disk('public')->delete($course->image);
             }
-            $data['image'] = $request->file('image')->store('courses', 'public');
+            $data['image'] = $request->file('image')->store('images/courses', 'public');
         }
 
         $course->update($data);
@@ -122,7 +122,7 @@ class TeacherDashboardController extends Controller
 
         // ✅ Save image if uploaded
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('events', 'public');
+            $data['image'] = $request->file('image')->store('images/events', 'public');
         }
         $data['slug'] = Str::slug($data['title']);
         Event::create($data);
@@ -149,7 +149,7 @@ class TeacherDashboardController extends Controller
             if ($event->image) {
                 Storage::disk('public')->delete($event->image);
             }
-            $data['image'] = $request->file('image')->store('events', 'public');
+            $data['image'] = $request->file('image')->store('images/events', 'public');
         }
 
         $event->update($data);

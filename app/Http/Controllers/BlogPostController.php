@@ -43,7 +43,7 @@ class BlogPostController extends Controller
         $data['author_id'] = Auth::id();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('blog', 'public');
+            $data['image'] = $request->file('image')->store('images/blog', 'public');
         }
 
         BlogPost::create($data);
@@ -61,7 +61,7 @@ class BlogPostController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('blog', 'public');
+            $data['image'] = $request->file('image')->store('images/blog', 'public');
         }
 
         $post->update($data);

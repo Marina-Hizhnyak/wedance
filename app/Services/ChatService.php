@@ -73,7 +73,7 @@ class ChatService
                 $dateTime = \Carbon\Carbon::parse($event->date)->format('d/m/Y à H:i');
                 $location = $event->location ?? 'Lieu inconnu';
                 $organizer = $event->organizer?->name ?? 'Wedance';
-                $url = route('events'); // или route('events.show', $event->slug) если есть индивидуальные страницы
+                $url = route('events');
 
                 return "Titre : $title\nDate : $dateTime\nLieu : $location\nOrganisateur : $organizer\nLien : $url\nDescription : $description\n---";
             })
