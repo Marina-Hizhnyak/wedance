@@ -42,7 +42,7 @@ function submit() {
           <input
             v-model="form.name"
             type="text"
-            placeholder="Enter your name"
+            placeholder=" Entrez votre nom"
             class="w-full bg-transparent border-none focus:outline-none focus:ring-0 focus:shadow-none placeholder:text-white py-4 text-xl font-body leading-[30px] relative z-10"
           />
           <div class="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-accent via-secondary to-primary z-0"></div>
@@ -53,7 +53,7 @@ function submit() {
           <input
             v-model="form.email"
             type="email"
-            placeholder="Enter your email"
+            placeholder="Entrez votre e-mail"
             class="w-full bg-transparent border-none focus:outline-none focus:ring-0 focus:shadow-none placeholder:text-white py-4 text-xl font-body leading-[30px] relative z-10"
           />
           <div class="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-accent via-secondary to-primary z-0"></div>
@@ -65,7 +65,7 @@ function submit() {
             v-model="form.course_id"
             class="w-full bg-transparent border-none focus:outline-none focus:ring-0 focus:shadow-none text-white text-xl py-4 font-body relative z-10 appearance-none"
           >
-            <option disabled value="">Select a course</option>
+            <option disabled value="">Sélectionnez un cours</option>
             <option v-for="course in courses" :key="course.id" :value="course.id">
               {{ course.title }}
             </option>
@@ -78,7 +78,7 @@ function submit() {
           <textarea
             v-model="form.message"
             rows="4"
-            placeholder="Enter your message"
+            placeholder="Entrez votre message"
             class="w-full bg-transparent border-none focus:outline-none focus:ring-0 focus:shadow-none placeholder:text-white py-4 text-xl font-body leading-[30px] relative z-10"
           ></textarea>
           <div class="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-accent via-secondary to-primary z-0"></div>

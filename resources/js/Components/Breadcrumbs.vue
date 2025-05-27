@@ -31,10 +31,16 @@ const pathTranslations = {
   'cours': 'Cours',
   'blog': 'Blog',
   'contact': 'Contact',
+  'gallery': 'Galerie',
+  'courses': 'Cours',
   'about': 'À propos',
   'mon-espace': 'Mon espace',
   'inscription': 'Inscription',
   'dashboard': 'Tableau de bord',
+  'legal-notice': 'Mentions légales',
+  'privacy-policy': 'Politique de confidentialité',
+  'terms-of-use': 'Conditions générales d’utilisation',
+  'cookie-policy': 'Gestion des cookies',
 }
 </script>
 

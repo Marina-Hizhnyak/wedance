@@ -34,7 +34,7 @@
             ]"
           >
             <td class="px-4 py-2">
-              <img v-if="post.image" :src="`/storage/${post.image}`" class="w-20 h-14 object-cover rounded" />
+              <img v-if="post.image" :src="`${post.image}`" class="w-20 h-14 object-cover rounded" />
             </td>
             <td class="px-4 py-2">{{ post.title }}</td>
             <td class="px-4 py-2">{{ post.author?.name }}</td>

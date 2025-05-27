@@ -25,7 +25,7 @@
           >
             <td class="px-4 py-2">
               <div class="flex items-center space-x-2">
-                <img v-if="t.avatar" :src="'/storage/' + t.avatar" class="w-10 h-10 rounded-full" />
+                <img v-if="t.avatar" :src="t.avatar" class="w-10 h-10 rounded-full" />
                 <span>{{ t.user?.name || '—' }}</span>
               </div>
             </td>
