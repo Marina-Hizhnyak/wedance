@@ -24,15 +24,15 @@
         <ul class="space-y-6 text-base text-text text-body py-5">
           <li class="flex items-center space-x-2">
             <img src="/images/icons/point.svg" alt="map" class="w-5 h-5" />
-            <span>Bruxelles 62 12-648 Wortund, Palarni.</span>
+            <span>1435 17, Hevillers, Mont-Saint-Guibert, Belgique</span>
           </li>
           <li class="flex items-center space-x-2">
              <img src="/images/icons/telephone.svg" alt="phone" class="w-5 h-5" />
-            <span>(+1) 123 456 7893</span>
+            <span>(+32) 473 368 110</span>
           </li>
           <li class="flex items-center space-x-2">
              <img src="/images/icons/enveloppe.svg" alt="mail" class="w-5 h-5" />
-            <span>name@email.com</span>
+            <span>maryfadeeva1208@gmail.com</span>
           </li>
         </ul>
       </div>
@@ -53,11 +53,34 @@
         </div>
 
         <!-- Social media icons -->
-        <div class="flex justify-center items-center space-x-10 text-xl">
-          <img src="/images/icons/lettre.svg" class="w-5 h-5" alt="Plane" />
-          <img src="/images/icons/phone.svg" class="w-5 h-5" alt="WhatsApp" />
-          <img src="/images/icons/vk.svg" class="w-5 h-5" alt="VK" />
+        <div class="flex justify-center items-center space-x-10 text-xl mt-4">
+        <a href="https://wedance.maryk.be/" target="_blank" rel="noopener" class="transition transform hover:scale-110">
+            <img src="/images/icons/lettre.svg" class="w-5 h-5" alt="Plane" />
+        </a>
+        <a href="https://wedance.maryk.be/" target="_blank" rel="noopener" class="transition transform hover:scale-110">
+            <img src="/images/icons/phone.svg" class="w-5 h-5" alt="WhatsApp" />
+        </a>
+        <a href="https://wedance.maryk.be/" target="_blank" rel="noopener" class="transition transform hover:scale-110">
+            <img src="/images/icons/vk.svg" class="w-5 h-5" alt="VK" />
+        </a>
         </div>
+
+
+        <div class="mt-8 pt-4 text-sm text-center text-gray-500">
+        © {{ new Date().getFullYear() }} Wedance. Design & développement par
+        <a
+            href="https://www.linkedin.com/in/maryna-khyzhniak-976aab207/"
+            target="_blank"
+            class="text-primary hover:text-[#F9B233] font-semibold transition duration-300 ease-in-out inline-flex items-center space-x-1 group"
+        >
+            <span>Maryna Khyzhniak</span>
+            <span class="heartbeat text-red-500 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300">❤️</span>
+            <span class="transition-opacity opacity-0 group-hover:opacity-100 ml-1 duration-300">✨</span>
+        </a>
+        </div>
+
+
+
       </div>
 
     <!-- Section 3: Call to action -->
@@ -75,18 +98,19 @@
     <img src="/images/backgrounds/couple.png" alt="Dance icon" class="absolute xl:-top-10 xl:left-60 xl:h-[300px] lg:-top-5 lg:left-48 lg:h-[250px] md:top-0 md:left-40 md:h-[200px] sm:h-[200px] sm:top-0 sm:left-[400px] h-[200px] top-0 left-[300px] w-auto" />
 
     <!-- Footer info -->
-        <div class="text-sm text-gray-400 mt-8 relative z-10">
-          <p>© {{ new Date().getFullYear() }} Wedance. Tous droits réservés.</p>
-            <div class="flex flex-wrap gap-2 mt-2">
-                <Link href="/legal-notice" class="hover:text-white">Mentions légales</Link>
-                <span>·</span>
-                <Link href="/privacy-policy" class="hover:text-white">Politique de confidentialité</Link>
-                <span>·</span>
-                <Link href="/terms-of-use" class="hover:text-white">CGU</Link>
-                <span>·</span>
-                <Link href="/cookie-policy" class="hover:text-white">Cookies</Link>
-            </div>
-        </div>
+<div class="text-sm text-gray-400 mt-8 relative z-10 text-center md:text-left">
+  <div class="flex flex-wrap justify-center md:justify-start items-center gap-x-2 gap-y-2 mt-2">
+    <Link href="/legal-notice" class="hover:text-primary transition duration-200">Mentions légales</Link>
+    <span class="text-gray-500">|</span>
+    <Link href="/privacy-policy" class="hover:text-primary transition duration-200">Politique de confidentialité</Link>
+    <span class="text-gray-500">|</span>
+    <Link href="/terms-of-use" class="hover:text-primary transition duration-200">CGU</Link>
+    <span class="text-gray-500">|</span>
+    <Link href="/cookie-policy" class="hover:text-primary transition duration-200">Cookies</Link>
+
+  </div>
+</div>
+
     </div>
 
    </div>
@@ -96,3 +120,25 @@
 import { Link } from '@inertiajs/vue3'
 </script>
 
+<style>
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.3);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.3);
+  }
+  70% {
+    transform: scale(1);
+  }
+}
+.heartbeat {
+  animation: heartbeat 1.5s infinite;
+}
+</style>

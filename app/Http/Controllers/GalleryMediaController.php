@@ -19,6 +19,22 @@ class GalleryMediaController extends Controller
         ]);
     }
 
+    // public function store(Request $request)
+    // {
+    //     $data = $request->validate([
+    //         'title' => 'nullable|string|max:255',
+    //         'image' => 'required|image|max:2048',
+    //         'event_id' => 'nullable|exists:events,id',
+    //     ]);
+
+    //     if ($request->hasFile('image')) {
+    //         $data['image'] = $request->file('image')->store('images/gallery', 'public');
+    //     }
+
+    //     GalleryMedia::create($data);
+
+    //     return redirect()->back()->with('success', 'Image ajoutée avec succès.');
+    // }
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -28,13 +44,25 @@ class GalleryMediaController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('images/gallery', 'public');
+            $file = $request->file('image');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+
+            $targetPath = public_path('storage/images/gallery');
+
+            if (!file_exists($targetPath)) {
+                mkdir($targetPath, 0777, true);
+            }
+
+            $file->move($targetPath, $filename);
+
+            $data['image'] = '/images/gallery/' . $filename;
         }
 
         GalleryMedia::create($data);
 
         return redirect()->back()->with('success', 'Image ajoutée avec succès.');
     }
+
 
     public function destroy(GalleryMedia $media)
     {

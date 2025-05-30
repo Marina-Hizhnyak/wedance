@@ -11,7 +11,7 @@
       >
         <!-- Image -->
         <img loading="lazy"
-          :src="`${item.image}`"
+           :src="`/storage/${item.image.replace(/^\/+/, '')}`"
           :alt="item.title"
           class="w-full h-72 object-cover transform group-hover:scale-105 transition duration-500"
         />

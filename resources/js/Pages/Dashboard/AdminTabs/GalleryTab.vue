@@ -34,7 +34,7 @@
         <!-- Image preview with fixed aspect ratio -->
         <div class="aspect-video overflow-hidden">
         <img
-            :src="`${item.image}`"
+            :src="`/storage/${item.image.replace(/^\/+/, '')}`"
             :alt="item.title"
             class="w-full h-full object-cover"
         />

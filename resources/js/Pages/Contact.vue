@@ -79,13 +79,13 @@ function submit() {
       <div class="flex flex-col lg:flex-row justify-center items-start gap-20 my-20 mb-40">
         <!-- Icons -->
         <div class="flex flex-col justify-center items-center gap-10 self-center">
-          <a href="#" class="hover:opacity-80 transition">
+          <a href="https://wedance.maryk.be/" target="_blank" rel="noopener" class="hover:opacity-80 transition">
             <img src="/images/icons/lettre.svg" alt="Telegram" class="w-10 h-10" />
           </a>
-          <a href="#" class="hover:opacity-80 transition">
+          <a href="https://wedance.maryk.be/" target="_blank" rel="noopener" class="hover:opacity-80 transition">
             <img src="/images/icons/tel.svg" alt="WhatsApp" class="w-10 h-10" />
           </a>
-          <a href="#" class="hover:opacity-80 transition">
+          <a href="https://wedance.maryk.be/" target="_blank" rel="noopener" class="hover:opacity-80 transition">
             <img src="/images/icons/vk.svg" alt="VK" class="w-10 h-10" />
           </a>
         </div>
@@ -109,15 +109,15 @@ function submit() {
         <div class="space-y-8">
             <p class="flex items-center gap-5">
             <img src="/images/icons/telephone.svg" alt="phone" class="w-10 h-10" />
-            <span class="text-white font-normal font-title text-xl">+7 920 106 89 29</span>
+            <span class="text-white font-normal font-title text-xl">(+32) 473 368 110</span>
             </p>
             <p class="flex items-center gap-5">
             <img src="/images/icons/point.svg" alt="map" class="w-10 h-10" />
-            <span class="text-white font-normal font-title text-xl">Bruxelles, Albert Hall, 6</span>
+            <span class="text-white font-normal font-title text-xl">1435 17, Hevillers, Mont-Saint-Guibert, Belgique</span>
             </p>
             <p class="flex items-center gap-5">
             <img src="/images/icons/enveloppe.svg" alt="mail" class="w-10 h-10" />
-            <span class="text-white font-normal font-title text-xl">way7creation@gmail.com</span>
+            <span class="text-white font-normal font-title text-xl">maryfadeeva1208@gmail.com</span>
             </p>
         </div>
 

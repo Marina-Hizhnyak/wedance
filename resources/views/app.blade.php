@@ -2,6 +2,12 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+    <script>
+        window.tarteaucitronForceLanguage = 'fr';
+    </script>
+    <script src="https://tarteaucitron.io/load.js?domain=wedance.maryk.be&uuid=3ac8a7e35d301b9f6ec05d2eb8a7bca256c51b72"
+        async></script>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -27,6 +33,8 @@
     @routes
     @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
     @inertiaHead
+
+
 </head>
 
 <body class="font-sans antialiased">
