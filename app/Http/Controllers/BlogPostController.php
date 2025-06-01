@@ -30,6 +30,17 @@ class BlogPostController extends Controller
         ]);
     }
 
+    private function generateUniqueSlug($title)
+    {
+        $slug = Str::slug($title);
+        $originalSlug = $slug;
+        $i = 2;
+        while (BlogPost::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $i;
+            $i++;
+        }
+        return $slug;
+    }
 
     public function store(Request $request)
     {
@@ -39,7 +50,7 @@ class BlogPostController extends Controller
             'image' => 'nullable|image|max:2048',
         ]);
 
-        $data['slug'] = Str::slug($data['title']) . '-' . uniqid();
+        $data['slug'] = $this->generateUniqueSlug($data['title']);
         $data['author_id'] = Auth::id();
 
         if ($request->hasFile('image')) {

@@ -2,6 +2,10 @@
 import BaseLayout from '@/Layouts/BaseLayout.vue'
 import { useForm, usePage } from '@inertiajs/vue3'
 import { computed } from 'vue'
+import { Head } from '@inertiajs/vue3'
+
+const pageTitle = 'Wedance – Inscription aux cours'
+const pageDescription = 'Inscrivez-vous facilement à nos cours de danse latine en quelques clics : salsa, bachata, lindy hop et plus.'
 
 defineOptions({ layout: BaseLayout })
 
@@ -26,6 +30,17 @@ function submit() {
 </script>
 
 <template>
+    <Head>
+  <title>{{ pageTitle }}</title>
+  <meta name="description" :content="pageDescription" />
+  <meta property="og:title" :content="pageTitle" />
+  <meta property="og:description" :content="pageDescription" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" :content="`https://wedance.maryk.be${$page.url}`" />
+  <meta property="og:image" content="https://wedance.maryk.be/images/og-cover.jpg" />
+  <link rel="canonical" :href="`https://wedance.maryk.be${$page.url}`" />
+</Head>
+
   <div class="bg-gradient-to-b from-[#1a0a05] to-background text-white min-h-screen font-inter">
     <!-- Page Heading -->
     <section class="text-center pt-24 pb-20">

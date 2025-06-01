@@ -77,7 +77,7 @@
 </template>
 
 <script setup>
-import { ref, nextTick, computed } from 'vue'
+import { ref, nextTick, computed, onMounted } from 'vue'
 import { defineProps } from 'vue'
 import { useForm, usePage, router } from '@inertiajs/vue3'
 import BaseLayout from '@/Layouts/BaseLayout.vue'
@@ -94,6 +94,8 @@ const user = usePage().props.auth?.user
 const form = useForm({
   content: '',
 })
+
+const commentSection = ref(null)
 
 const isLiked = computed(() => {
   if (!user || !post.likes) return false
@@ -116,20 +118,32 @@ function toggleLike() {
   })
 }
 
-const commentSection = ref(null)
-
 function submitComment() {
-  router.post(route('blog.comment', props.post.id), {
+  localStorage.setItem('scrollToComment', '1')
+
+  router.post(route('blog.comment', post.id), {
     content: form.content,
   }, {
     onSuccess: () => {
       form.reset()
-      nextTick(() => {
-        commentSection.value?.scrollIntoView({ behavior: 'smooth' })
+      router.visit(window.location.pathname, {
+        preserveState: false,
+        preserveScroll: false,
       })
     }
   })
 }
+
+onMounted(() => {
+
+  if (localStorage.getItem('scrollToComment')) {
+    localStorage.removeItem('scrollToComment')
+
+    setTimeout(() => {
+      commentSection.value?.scrollIntoView({ behavior: 'smooth' })
+    }, 500)
+  }
+})
 
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('fr-FR', {
@@ -139,4 +153,3 @@ function formatDate(dateStr) {
   })
 }
 </script>
-

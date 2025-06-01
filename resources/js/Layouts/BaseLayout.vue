@@ -8,7 +8,7 @@ import FlashMessage from '@/Components/FlashMessage.vue'
 
 <template>
     <div class="relative flex flex-col min-h-screen">
-        <div class="absolute min-w-[500px] min-h-[500px] top-0 left-0 bg-no-repeat bg-cover z-[-1]"
+        <div class="absolute min-w-[300px] min-h-[500px] top-0 left-0 bg-no-repeat bg-cover z-[-1]"
             style="background-image: url('/images/backgrounds/Ellipse.png');"></div>
         <Header />
         <!-- Контент страницы -->

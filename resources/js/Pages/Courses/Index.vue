@@ -2,6 +2,10 @@
 import BaseLayout from '@/Layouts/BaseLayout.vue'
 import { ref, computed } from 'vue'
 import { router, Link } from '@inertiajs/vue3'
+import { Head } from '@inertiajs/vue3'
+
+const pageTitle = 'Wedance – Nos cours de danse'
+const pageDescription = 'Explorez tous nos cours de danse latine : salsa, bachata, lindy hop et bien plus encore à Bruxelles.'
 
 defineOptions({ layout: BaseLayout })
 
@@ -46,6 +50,17 @@ const handleImageLoad = (id) => {
 </script>
 
 <template>
+    <Head>
+  <title>{{ pageTitle }}</title>
+  <meta name="description" :content="pageDescription" />
+  <meta property="og:title" :content="pageTitle" />
+  <meta property="og:description" :content="pageDescription" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" :content="`https://wedance.maryk.be${$page.url}`" />
+  <meta property="og:image" content="https://wedance.maryk.be/images/og-cover.jpg" />
+  <link rel="canonical" :href="`https://wedance.maryk.be${$page.url}`" />
+</Head>
+
     <section class="px-4 md:px-8 lg:px-16 py-10 bg-gradient-symmetric min-h-screen">
         <div class="max-w-7xl mx-auto">
             <h1 class="text-3xl font-extrabold text-accent mb-8 text-center">

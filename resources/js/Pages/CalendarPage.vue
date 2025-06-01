@@ -6,6 +6,10 @@ import { defineProps } from 'vue'
 import BaseLayout from '@/Layouts/BaseLayout.vue'
 import { router, usePage } from '@inertiajs/vue3'
 import frLocale from '@fullcalendar/core/locales/fr'
+import { Head } from '@inertiajs/vue3'
+
+const pageTitle = 'Wedance – Calendrier des cours et événements'
+const pageDescription = 'Consultez notre calendrier interactif pour connaître les dates des cours, ateliers et soirées dansantes à Bruxelles.'
 
 defineOptions({ layout: BaseLayout })
 
@@ -38,6 +42,17 @@ eventClick(info) {
 </script>
 
 <template>
+    <Head>
+  <title>{{ pageTitle }}</title>
+  <meta name="description" :content="pageDescription" />
+  <meta property="og:title" :content="pageTitle" />
+  <meta property="og:description" :content="pageDescription" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" :content="`https://wedance.maryk.be${$page.url}`" />
+  <meta property="og:image" content="https://wedance.maryk.be/images/og-cover.jpg" />
+  <link rel="canonical" :href="`https://wedance.maryk.be${$page.url}`" />
+</Head>
+
     <div class="max-w-6xl mx-auto py-10 text-white">
         <h1 class="text-3xl font-bold text-primary mb-6 text-center">Calendrier des cours et événements</h1>
         <FullCalendar :options="calendarOptions" />

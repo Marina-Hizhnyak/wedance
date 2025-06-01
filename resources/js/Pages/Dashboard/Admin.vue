@@ -73,7 +73,7 @@ function toggleSidebar() {
 
     <!-- Mobile Header -->
     <div class="md:hidden p-4 bg-[#121212] flex justify-between items-center border-b border-[#333]">
-      <div class="text-xl font-title font-bold text-primary">Admin Panel</div>
+      <div class="text-xl font-title font-bold text-primary mt-4">Panneau d’administration</div>
       <button @click="toggleSidebar" class="text-primary text-2xl focus:outline-none">☰</button>
     </div>
 

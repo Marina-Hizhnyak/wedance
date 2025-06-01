@@ -62,6 +62,7 @@
 <script setup>
 import { ref, onUpdated } from 'vue'
 import { marked } from 'marked'
+import DOMPurify from 'dompurify'
 
 // Reactive state variables
 const showChat = ref(false)
@@ -82,7 +83,8 @@ marked.setOptions({
 
 // Markdown parser function
 function parseMarkdown(text) {
-  return marked.parse(text ?? '')
+  const dirty = marked.parse(text ?? '')
+  return DOMPurify.sanitize(dirty)
 }
 
 // Open the chat window and create a new session if not already created

@@ -1,4 +1,15 @@
 <template>
+    <Head>
+  <title>{{ pageTitle }}</title>
+  <meta name="description" :content="pageDescription" />
+  <meta property="og:title" :content="pageTitle" />
+  <meta property="og:description" :content="pageDescription" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" :content="`https://wedance.maryk.be${$page.url}`" />
+  <meta property="og:image" content="https://wedance.maryk.be/images/og-cover.jpg" />
+  <link rel="canonical" :href="`https://wedance.maryk.be${$page.url}`" />
+</Head>
+
   <div class="px-4 md:px-8 lg:px-16 py-10 bg-gradient-symmetric min-h-screen">
     <div class="w-[90%] max-w-7xl mx-auto">
       <h1 class="text-3xl font-bold text-center text-secondary mb-10">Nos articles</h1>
@@ -47,6 +58,10 @@
 import { defineProps } from 'vue'
 import { Link } from '@inertiajs/vue3'
 import BaseLayout from '@/Layouts/BaseLayout.vue'
+import { Head } from '@inertiajs/vue3'
+
+const pageTitle = 'Wedance – Blog et articles'
+const pageDescription = 'Lisez nos articles sur la danse, la bachata, les conseils pour débutants, et la vie de l’école Wedance.'
 
 defineOptions({ layout: BaseLayout })
 
